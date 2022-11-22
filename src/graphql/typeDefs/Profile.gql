@@ -4,8 +4,8 @@ type Profile {
   lastName: String!
   fullName: String!
   photo: URL
-  countryCode: CountryCode!
-  timezone: TimeZone!
+  countryCode: CountryCode
+  timezone: TimeZone
   locale: Locale
   teams: [Team]!
   createdAt: DateTime!
