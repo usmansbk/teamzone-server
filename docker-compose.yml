@@ -3,7 +3,7 @@ version: "3.9"
 services:
   app:
     container_name: server
-    image: babakolo/apollo-server:dev
+    image: babakolo/teamzone
     restart: always
     env_file: .env
     build:

@@ -49,8 +49,7 @@
     "babel-node": "babel-node --extensions '.ts'",
     "dev": "nodemon --exec yarn babel-node src",
     "test": "jest",
-    "docker:build": "docker build -t babakolo/apollo-server .",
-    "docker:build:dev": "docker build -t babakolo/apollo-server:dev . --target dev",
+    "docker:build": "docker build -t babakolo/teamzone . --target dev",
     "docker:test": "docker compose run --rm app yarn test",
     "generate": "prisma generate",
     "migrate": "prisma migrate dev"

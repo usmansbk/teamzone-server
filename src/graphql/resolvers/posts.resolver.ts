@@ -8,7 +8,7 @@ const posts = [
 ];
 
 export default {
-  Query: {
+  User: {
     posts: () => posts,
   },
 };
