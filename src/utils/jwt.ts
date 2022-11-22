@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 export function sign(payload: string | object | Buffer) {
-  return jwt.sign(payload, process.env.JWT_SECRET);
+  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "365d" });
 }
 
 export function verify(token: string) {
