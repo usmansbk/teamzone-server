@@ -6,6 +6,7 @@ type Profile {
   photo: URL
   countryCode: CountryCode!
   timezone: TimeZone!
+  locale: Locale
   teams: [Team]!
   createdAt: DateTime!
   updatedAt: DateTime

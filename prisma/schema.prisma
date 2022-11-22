@@ -16,6 +16,7 @@ model Profile {
   lastName    String
   countryCode String?
   timezone    String?
+  locale      String?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   user        User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
