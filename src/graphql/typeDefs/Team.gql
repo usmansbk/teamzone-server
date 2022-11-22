@@ -24,7 +24,7 @@ type Mutation {
   updateTeam(input: UpdateTeamInput!): Team!
   deleteTeam(input: DeleteTeamInput!): Team!
   leaveTeam(teamId: ID!): TeamMember!
-  removeTeammates(id: [ID!]!): [TeamMember!]!
+  removeTeammates(memberIds: [ID!]!): [TeamMember!]!
 }
 
 input CreateTeamInput {
