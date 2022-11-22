@@ -2,7 +2,7 @@ type Team {
   id: ID!
   name: String!
   photo: URL
-  inviteCode: String
+  inviteCode: ID
   teammates: [TeamMember]!
   createdAt: DateTime!
   updatedAt: DateTime
@@ -23,6 +23,7 @@ type Mutation {
   createTeam(input: CreateTeamInput!): Team!
   updateTeam(input: UpdateTeamInput!): Team!
   deleteTeam(input: DeleteTeamInput!): Team!
+  joinTeam(inviteCode: ID!): TeamMember!
   leaveTeam(teamId: ID!): TeamMember!
   removeTeammates(memberIds: [ID!]!): [TeamMember!]!
 }
