@@ -58,6 +58,7 @@ model Team {
   owner      Profile      @relation(fields: [ownerId], references: [id])
   ownerId    String
   name       String
+  isArchived Boolean      @default(false)
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
 }

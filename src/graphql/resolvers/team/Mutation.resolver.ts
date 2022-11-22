@@ -128,6 +128,9 @@ export default {
               not: currentUser!.id,
             },
           },
+          isArchived: {
+            not: true,
+          },
         },
       });
 
@@ -219,6 +222,90 @@ export default {
               },
             },
           ],
+        },
+      });
+    },
+    async archiveTeam(
+      parent: unknown,
+      { id }: { id: string },
+      context: AppContext
+    ) {
+      const { prismaClient, currentUser } = context;
+
+      const team = await prismaClient.team.findFirst({
+        where: {
+          OR: [
+            {
+              ownerId: currentUser!.id,
+            },
+            {
+              teammates: {
+                some: {
+                  memberId: currentUser!.id,
+                  role: "ADMIN",
+                },
+              },
+            },
+          ],
+        },
+      });
+
+      if (!team) {
+        throw new GraphQLError(AUTHORIZATION_ERROR, {
+          extensions: {
+            code: AUTHORIZATION_ERROR,
+          },
+        });
+      }
+
+      return prismaClient.team.update({
+        where: {
+          id,
+        },
+        data: {
+          isArchived: true,
+        },
+      });
+    },
+    async unarchiveTeam(
+      parent: unknown,
+      { id }: { id: string },
+      context: AppContext
+    ) {
+      const { prismaClient, currentUser } = context;
+
+      const team = await prismaClient.team.findFirst({
+        where: {
+          OR: [
+            {
+              ownerId: currentUser!.id,
+            },
+            {
+              teammates: {
+                some: {
+                  memberId: currentUser!.id,
+                  role: "ADMIN",
+                },
+              },
+            },
+          ],
+        },
+      });
+
+      if (!team) {
+        throw new GraphQLError(AUTHORIZATION_ERROR, {
+          extensions: {
+            code: AUTHORIZATION_ERROR,
+          },
+        });
+      }
+
+      return prismaClient.team.update({
+        where: {
+          id,
+        },
+        data: {
+          isArchived: false,
         },
       });
     },
