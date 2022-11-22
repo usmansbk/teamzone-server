@@ -5,6 +5,7 @@ type Team {
   inviteCode: ID
   teammates: [TeamMember]!
   owner: User!
+  isOwner: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime
 }
@@ -20,6 +21,7 @@ type TeamMember {
   member: User!
   joinedAt: DateTime!
   role: TeamRole
+  isMe: Boolean
 }
 
 type Query {

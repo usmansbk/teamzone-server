@@ -1,3 +1,4 @@
+import { Team } from "@prisma/client";
 import { AppContext } from "src/types";
 
 export default {
@@ -6,7 +7,7 @@ export default {
       parent: unknown,
       { id }: { id: string },
       context: AppContext
-    ) {
+    ): Promise<Team> {
       const { prismaClient, currentUser } = context;
 
       return prismaClient.team.findFirstOrThrow({
