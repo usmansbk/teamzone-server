@@ -12,7 +12,7 @@ type Query {
 }
 
 type AuthPayload {
-  accessToken: JWT
+  token: JWT
 }
 
 type Mutation {

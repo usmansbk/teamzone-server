@@ -1,3 +1,7 @@
+import { Profile } from "@prisma/client";
+
 export default {
-  Profile: {},
+  Profile: {
+    picture: (profile: Profile) => profile.pictureUrl,
+  },
 };
