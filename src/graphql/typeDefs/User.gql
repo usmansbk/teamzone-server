@@ -8,7 +8,7 @@ type User @auth(rules: [{ allow: owner, identityClaim: "id" }]) {
 }
 
 type Query {
-  me: User! @auth
+  me: User!
 }
 
 type AuthPayload {

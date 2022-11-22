@@ -64,6 +64,7 @@
     "@graphql-tools/load-files": "^6.6.1",
     "@graphql-tools/merge": "^8.3.12",
     "@graphql-tools/schema": "^9.0.10",
+    "@graphql-tools/utils": "^9.1.1",
     "@prisma/client": "^4.6.1",
     "@sentry/node": "^7.20.1",
     "@sentry/tracing": "^7.20.1",
