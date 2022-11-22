@@ -22,7 +22,8 @@ type Query {
 type Mutation {
   createTeam(input: CreateTeamInput!): Team!
   updateTeam(input: UpdateTeamInput!): Team!
-  deleteTeam(input: DeleteTeamInput!): Team!
+  deleteTeam(id: ID!): Team!
+  archiveTeam(id: ID!): Team!
   joinTeam(inviteCode: ID!): TeamMember!
   leaveTeam(teamId: ID!): TeamMember!
   removeTeammates(memberIds: [ID!]!): [TeamMember!]!
@@ -35,8 +36,4 @@ input CreateTeamInput {
 input UpdateTeamInput {
   id: ID!
   name: NonEmptyString!
-}
-
-input DeleteTeamInput {
-  id: ID!
 }
