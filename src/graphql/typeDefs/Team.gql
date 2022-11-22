@@ -2,6 +2,7 @@ type Team {
   id: ID!
   name: String!
   photo: URL
+  inviteCode: String
   teammates: [TeamMember]!
   createdAt: DateTime!
   updatedAt: DateTime
