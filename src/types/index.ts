@@ -1,5 +1,5 @@
 import type { TFunction } from "i18next";
-import type { PrismaClient, User } from "@prisma/client";
+import type { PrismaClient, Profile } from "@prisma/client";
 import type { JwtUtil } from "src/utils/jwt";
 
 export * from "./graphql";
@@ -9,7 +9,7 @@ export interface AppContext {
   t: TFunction<"translation", undefined>;
   prismaClient: PrismaClient;
   jwt: JwtUtil;
-  currentUser?: User | null;
+  currentUser?: Profile | null;
 }
 
 declare global {

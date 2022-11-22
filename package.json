@@ -82,7 +82,7 @@
     "i18next-http-middleware": "^3.2.1",
     "ioredis": "^5.2.4",
     "jsonwebtoken": "^8.5.1",
-    "nanoid": "^4.0.0",
+    "nanoid": "3",
     "rate-limit-redis": "^3.0.1"
   }
 }
