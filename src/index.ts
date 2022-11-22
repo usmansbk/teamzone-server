@@ -6,7 +6,7 @@ import express from "express";
 import http from "http";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { typeDefs, resolvers } from "./graphql/schema";
+import schema from "./graphql/schema";
 import Sentry, { initializeSentry } from "./config/sentry";
 import logger from "./utils/logger";
 import i18nMiddleware from "./middlewares/i18n";
@@ -36,8 +36,7 @@ const startServer = async () => {
   // Same ApolloServer initialization as before, plus the drain plugin
   // for our httpServer.
   const server = new ApolloServer<AppContext>({
-    typeDefs,
-    resolvers,
+    schema,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
 

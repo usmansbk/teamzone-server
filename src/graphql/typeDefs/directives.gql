@@ -4,8 +4,6 @@ Any field with no @auth directive is public by default
 Calling the @auth directive without any rules means the user must be authenticated
 Calling the @auth(rules: [{ ... }]) with rules means the user must be authorized according to the set rules
 **Authorization rules operate on the deny-by-default principle**. Meaning that if an authorization rule is not specifically configured, it is denied.
-Reference:
-- [graphql-tools](https://www.graphql-tools.com/docs/schema-directives#enforcing-access-permissions)
 """
 directive @auth(rules: [AuthRule!]) on FIELD_DEFINITION | OBJECT
 
