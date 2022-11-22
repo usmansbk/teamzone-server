@@ -44,5 +44,66 @@ export default {
         token: jwt.sign({ id: user.id }),
       };
     },
+    updateCurrentUserFullName(
+      parent: unknown,
+      { firstName, lastName }: { firstName: string; lastName: string },
+      context: AppContext
+    ) {
+      const { prismaClient, currentUser } = context;
+      return prismaClient.user.update({
+        where: {
+          id: currentUser!.id,
+        },
+        data: {
+          firstName,
+          lastName,
+        },
+      });
+    },
+    updateCurrentUserTimeZone(
+      parent: unknown,
+      { timezone }: { timezone: string },
+      context: AppContext
+    ) {
+      const { prismaClient, currentUser } = context;
+      return prismaClient.user.update({
+        where: {
+          id: currentUser!.id,
+        },
+        data: {
+          timezone,
+        },
+      });
+    },
+    updateCurrentUserCountry(
+      parent: unknown,
+      { countryCode }: { countryCode: string },
+      context: AppContext
+    ) {
+      const { prismaClient, currentUser } = context;
+      return prismaClient.user.update({
+        where: {
+          id: currentUser!.id,
+        },
+        data: {
+          countryCode,
+        },
+      });
+    },
+    updateCurrentUserLocale(
+      parent: unknown,
+      { locale }: { locale: string },
+      context: AppContext
+    ) {
+      const { prismaClient, currentUser } = context;
+      return prismaClient.user.update({
+        where: {
+          id: currentUser!.id,
+        },
+        data: {
+          locale,
+        },
+      });
+    },
   },
 };
