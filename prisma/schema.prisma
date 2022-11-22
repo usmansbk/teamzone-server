@@ -17,6 +17,7 @@ model Profile {
   countryCode  String?
   timezone     String?
   locale       String?
+  pictureUrl   String?
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
   owner        User?        @relation(fields: [ownerId], references: [id], onDelete: SetNull)
@@ -26,11 +27,12 @@ model Profile {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  profile   Profile?
+  id            String   @id @default(uuid())
+  email         String   @unique
+  emailVerified Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  profile       Profile?
 }
 
 enum TeamRole {

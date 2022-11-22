@@ -12,6 +12,8 @@ declare global {
       DB_USER: string;
       DATABASE: string;
       DATABASE_URL?: string;
+      GOOGLE_CLIENT_ID: string;
+      GOOGLE_CLIENT_SECRET: string;
     }
   }
 }

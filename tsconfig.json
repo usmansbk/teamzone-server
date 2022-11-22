@@ -19,6 +19,6 @@
     "noEmit": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*.ts", "environment.d.ts", "locales/**/*"],
+  "include": ["src", "environment.d.ts", "locales"],
   "exclude": ["node_modules"]
 }

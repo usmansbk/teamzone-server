@@ -3,7 +3,7 @@ type Profile {
   firstName: String!
   lastName: String!
   fullName: String!
-  photo: URL
+  picture: URL
   countryCode: CountryCode
   timezone: TimeZone
   locale: Locale

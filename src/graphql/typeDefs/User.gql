@@ -15,14 +15,5 @@ type AuthPayload {
 }
 
 type Mutation {
-  loginWithSocialProvider(input: SocialLoginInput!): AuthPayload!
-}
-
-enum SocialProvider {
-  GOOGLE
-}
-
-input SocialLoginInput {
-  token: NonEmptyString!
-  provider: SocialProvider!
+  loginWithGoogle(idToken: NonEmptyString!): AuthPayload!
 }
