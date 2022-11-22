@@ -1,0 +1,32 @@
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  username: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Query {
+  getUsers: [User]
+  getUserById(id: ID!): User
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+  updateUser(input: UpdateUserInput!): User!
+  deleteUser(id: ID!, reason: NonEmptyString): ID!
+}
+
+input CreateUserInput {
+  firstName: NonEmptyString!
+  lastName: NonEmptyString!
+  username: NonEmptyString!
+}
+
+input UpdateUserInput {
+  id: ID!
+  firstName: NonEmptyString
+  lastName: NonEmptyString
+  username: NonEmptyString
+}

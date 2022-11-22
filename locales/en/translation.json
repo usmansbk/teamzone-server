@@ -1,0 +1,4 @@
+{
+  "hello": "Hello, World!",
+  "TOO_MANY_API_REQUESTS": "You can only make {{max}} requests per hour!"
+}

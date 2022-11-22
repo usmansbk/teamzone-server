@@ -1,0 +1,5 @@
+{
+  "ignore": ["__tests__/**", "dist/**"],
+  "watch": ["src", "locales"],
+  "ext": "ts,json,gql"
+}

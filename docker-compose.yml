@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  app:
+    container_name: server
+    image: babakolo/apollo-server:dev
+    restart: always
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    depends_on:
+      - db
+      - cache
+    ports:
+      - 4000:4000
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - certs:/app/certs
+
+  cache:
+    container_name: redis-server
+    image: redis:6-alpine
+    restart: always
+    env_file: .env
+    command: redis-server
+    ports:
+      - 6379:${REDIS_PORT}
+    volumes:
+      - cache:/data
+
+  db:
+    container_name: postgresql_db
+    image: postgres:14-alpine
+    restart: always
+    env_file: .env
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DATABASE}
+    ports:
+      - 5432:${DB_PORT}
+    volumes:
+      - db:/var/lib/postgresql/data
+volumes:
+  certs:
+  node_modules:
+  db:
+    driver: local
+  cache:
+    driver: local

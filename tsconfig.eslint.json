@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/**/*.ts",
+    "tests/**/*.ts",
+    "environment.d.ts",
+    "locales/**/*",
+    "jest.config.ts"
+  ]
+}
