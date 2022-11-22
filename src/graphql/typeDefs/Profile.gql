@@ -1,0 +1,25 @@
+type Profile {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+  photo: URL
+  country: CountryCode!
+  timezone: TimeZone!
+  teams: [Team]!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Query {
+  me: Profile!
+}
+
+type Mutation {
+  updateCurrentUserFullName(
+    firstName: NonEmptyString!
+    lastName: NonEmptyString!
+  ): Profile!
+  updateCurrentUserTimeZone(timezone: TimeZone!): Profile!
+  updateCurrentUserCountry(countryCode: CountryCode!): Profile!
+}

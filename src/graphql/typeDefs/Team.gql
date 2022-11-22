@@ -1,0 +1,27 @@
+type Team {
+  id: ID!
+  name: String!
+  photo: URL
+  members: [Profile]!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Mutation {
+  createTeam(input: CreateTeamInput!): Team!
+  updateTeam(input: UpdateTeamInput!): Team!
+  deleteTeam(input: DeleteTeamInput!): Team!
+}
+
+input CreateTeamInput {
+  name: NonEmptyString!
+}
+
+input UpdateTeamInput {
+  id: ID!
+  name: NonEmptyString!
+}
+
+input DeleteTeamInput {
+  id: ID!
+}
