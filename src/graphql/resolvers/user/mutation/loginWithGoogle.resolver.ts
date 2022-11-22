@@ -8,18 +8,26 @@ export default {
       { idToken }: { idToken: string },
       context: AppContext
     ) => {
-      const { prismaClient } = context;
+      const { prismaClient, jwt } = context;
 
-      const { email, firstName, lastName, locale, emailVerified, pictureUrl } =
-        await verifyGoogleIdToken(idToken);
+      const payload = await verifyGoogleIdToken(idToken);
 
       let user = await prismaClient.user.findUnique({
         where: {
-          email,
+          email: payload.email,
         },
       });
 
       if (!user) {
+        const {
+          email,
+          firstName,
+          lastName,
+          locale,
+          emailVerified,
+          pictureUrl,
+        } = payload;
+
         user = await prismaClient.user.create({
           data: {
             email,
@@ -37,7 +45,7 @@ export default {
       }
 
       return {
-        token: "hello",
+        token: jwt.sign({ id: user.id }),
       };
     },
   },
