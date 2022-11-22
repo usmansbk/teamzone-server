@@ -13,20 +13,24 @@ const contextMiddleware = async (
   const { authorization } = headers;
 
   if (authorization) {
-    const { id } = jwt.verify(authorization) as { id: string };
-    const currentUser = await prismaClient.user.findUnique({ where: { id } });
+    try {
+      const { id } = jwt.verify(authorization) as { id: string };
+      const currentUser = await prismaClient.user.findUnique({ where: { id } });
 
-    if (currentUser) {
-      Sentry.setUser({
-        id: currentUser?.id,
-        email: currentUser.email,
-      });
+      if (currentUser) {
+        Sentry.setUser({
+          id: currentUser?.id,
+          email: currentUser.email,
+        });
 
-      if (currentUser.locale) {
-        await i18n.changeLanguage(currentUser.locale);
+        if (currentUser.locale) {
+          await i18n.changeLanguage(currentUser.locale);
+        }
+
+        req.context = { ...req.context, currentUser };
       }
-
-      req.context = { ...req.context, currentUser };
+    } catch (e) {
+      Sentry.captureException(e);
     }
   }
 
