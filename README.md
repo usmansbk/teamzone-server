@@ -75,6 +75,12 @@ Add your `DOTENV_KEY` to the github repo secrets
 
 This template supports all [`graphql-scalars`](https://the-guild.dev/graphql/scalars/docs/quick-start)
 
+### Google OAuth
+
+Create a Firebase account and get the `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` from your app's google cloud platform console
+
+Generate test idTokens from [google playground](https://developers.google.com/oauthplayground/)
+
 ## Troubleshoot
 
 **App using old env variables**

@@ -16,5 +16,5 @@ type AuthPayload {
 }
 
 type Mutation {
-  loginWithGoogle(idToken: NonEmptyString!): AuthPayload!
+  loginWithGoogle(idToken: JWT!): AuthPayload!
 }
