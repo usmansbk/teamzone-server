@@ -6,9 +6,8 @@ import express from "express";
 import http from "http";
 import cors from "cors";
 import bodyParser from "body-parser";
-import * as Sentry from "@sentry/node";
-import * as Tracing from "@sentry/tracing";
 import { typeDefs, resolvers } from "./graphql/schema";
+import Sentry, { initializeSentry } from "./config/sentry";
 import logger from "./utils/logger";
 import i18nMiddleware from "./middlewares/i18n";
 import contextMiddleware from "./middlewares/context";
@@ -17,20 +16,7 @@ import type { AppContext } from "./types";
 
 const app = express();
 
-Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-  integrations: [
-    // enable HTTP calls tracing
-    new Sentry.Integrations.Http({ tracing: true }),
-    // enable Express.js middleware tracing
-    new Tracing.Integrations.Express({ app }),
-  ],
-
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
-});
+initializeSentry(app);
 
 // Our httpServer handles incoming requests to our Express app.
 // Below, we tell Apollo Server to "drain" this httpServer,

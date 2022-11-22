@@ -30,6 +30,7 @@ model User {
   id            String   @id @default(uuid())
   email         String   @unique
   emailVerified Boolean  @default(false)
+  locale        String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   profile       Profile?
