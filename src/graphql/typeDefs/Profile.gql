@@ -12,7 +12,7 @@ type Profile {
 }
 
 type Query {
-  me: Profile!
+  getProfileById(id: ID!): Profile!
 }
 
 type Mutation {

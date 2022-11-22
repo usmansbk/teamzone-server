@@ -2,15 +2,28 @@ type Team {
   id: ID!
   name: String!
   photo: URL
-  members: [Profile]!
+  teammates: [TeamMember]!
   createdAt: DateTime!
   updatedAt: DateTime
+}
+
+type TeamMember {
+  id: ID!
+  team: Team!
+  profile: Profile!
+  joinedAt: DateTime!
+}
+
+type Query {
+  getTeamById(id: ID!): Team!
 }
 
 type Mutation {
   createTeam(input: CreateTeamInput!): Team!
   updateTeam(input: UpdateTeamInput!): Team!
   deleteTeam(input: DeleteTeamInput!): Team!
+  leaveTeam(teamId: ID!): TeamMember!
+  removeTeammates(id: [ID!]!): [TeamMember!]!
 }
 
 input CreateTeamInput {

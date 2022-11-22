@@ -5,3 +5,24 @@ type User {
   createdAt: DateTime!
   updatedAt: DateTime
 }
+
+type Query {
+  me: User!
+}
+
+type AuthPayload {
+  accessToken: JWT
+}
+
+type Mutation {
+  loginWithSocialProvider(input: SocialLoginInput!): AuthPayload!
+}
+
+enum SocialProvider {
+  GOOGLE
+}
+
+input SocialLoginInput {
+  token: NonEmptyString!
+  provider: SocialProvider!
+}
