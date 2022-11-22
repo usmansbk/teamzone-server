@@ -4,7 +4,7 @@ type Profile {
   lastName: String!
   fullName: String!
   photo: URL
-  country: CountryCode!
+  countryCode: CountryCode!
   timezone: TimeZone!
   teams: [Team]!
   createdAt: DateTime!
