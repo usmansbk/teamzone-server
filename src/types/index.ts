@@ -1,6 +1,8 @@
 import type { TFunction } from "i18next";
 import type { PrismaClient } from "@prisma/client";
 
+export * from "./graphql";
+
 export interface AppContext {
   language: string;
   t: TFunction<"translation", undefined>;
