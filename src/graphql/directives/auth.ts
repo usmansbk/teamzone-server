@@ -1,6 +1,6 @@
 import { defaultFieldResolver, GraphQLError, GraphQLSchema } from "graphql";
 import { MapperKind, mapSchema, getDirective } from "@graphql-tools/utils";
-import { AppContext, AuthRule } from "src/types";
+import type { AppContext, AuthRule } from "src/types";
 import {
   AUTHENTICATION_ERROR,
   AUTHORIZATION_ERROR,
