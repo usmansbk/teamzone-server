@@ -7,21 +7,23 @@ type Profile {
   countryCode: CountryCode
   timezone: TimeZone
   locale: Locale
-  teams: [Team]!
+  teams: [TeamMember]! @auth(rules: [{ allow: owner }])
+  createdTeams: [Team]! @auth(rules: [{ allow: owner }])
   createdAt: DateTime!
   updatedAt: DateTime
+  owner: User @auth(rules: [{ allow: owner }])
 }
 
 type Query {
-  getProfileById(id: ID!): Profile!
+  getProfileById(id: ID!): Profile! @auth
 }
 
 type Mutation {
   updateCurrentUserFullName(
     firstName: NonEmptyString!
     lastName: NonEmptyString!
-  ): Profile!
-  updateCurrentUserTimeZone(timezone: TimeZone!): Profile!
-  updateCurrentUserCountry(countryCode: CountryCode!): Profile!
-  updateCurrentUserLocale(locale: Locale!): Profile!
+  ): Profile! @auth
+  updateCurrentUserTimeZone(timezone: TimeZone!): Profile! @auth
+  updateCurrentUserCountry(countryCode: CountryCode!): Profile! @auth
+  updateCurrentUserLocale(locale: Locale!): Profile! @auth
 }

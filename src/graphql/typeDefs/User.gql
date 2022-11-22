@@ -1,4 +1,4 @@
-type User {
+type User @auth(rules: [{ allow: owner, identityClaim: "id" }]) {
   id: ID!
   email: EmailAddress!
   emailVerified: Boolean!
@@ -8,7 +8,7 @@ type User {
 }
 
 type Query {
-  me: User!
+  me: User! @auth
 }
 
 type AuthPayload {

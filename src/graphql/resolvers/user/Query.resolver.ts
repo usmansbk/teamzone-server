@@ -5,7 +5,7 @@ export default {
     me: (parent: unknown, args: never, context: AppContext) => {
       const { prismaClient, currentUser } = context;
 
-      return prismaClient.user.findUnique({
+      return prismaClient.user.findUniqueOrThrow({
         where: {
           id: currentUser?.id,
         },
