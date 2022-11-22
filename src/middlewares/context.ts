@@ -10,6 +10,8 @@ const contextMiddleware = async (
 ) => {
   const { t, language, headers, i18n } = req;
 
+  req.context = { t, language, prismaClient, jwt };
+
   const { authorization } = headers;
 
   if (authorization) {
@@ -18,6 +20,8 @@ const contextMiddleware = async (
       const currentUser = await prismaClient.user.findUnique({ where: { id } });
 
       if (currentUser) {
+        req.context.currentUser = currentUser;
+
         Sentry.setUser({
           id: currentUser?.id,
           email: currentUser.email,
@@ -26,23 +30,13 @@ const contextMiddleware = async (
         if (currentUser.locale) {
           await i18n.changeLanguage(currentUser.locale);
         }
-
-        req.context = { ...req.context, currentUser };
       }
     } catch (e) {
-      Sentry.captureException(e);
+      return next(e);
     }
   }
 
-  req.context = {
-    ...req.context,
-    t,
-    language,
-    prismaClient,
-    jwt,
-  };
-
-  next();
+  return next();
 };
 
 export default contextMiddleware;

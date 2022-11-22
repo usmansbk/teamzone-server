@@ -12,24 +12,12 @@ import logger from "./utils/logger";
 import i18nMiddleware from "./middlewares/i18n";
 import contextMiddleware from "./middlewares/context";
 import limiterMiddleware from "./middlewares/apiRateLimiter";
+import errorHandlerMiddleware from "./middlewares/errorHandler";
 import type { AppContext } from "./types";
 
 const app = express();
 
 initializeSentry(app);
-
-// Our httpServer handles incoming requests to our Express app.
-// Below, we tell Apollo Server to "drain" this httpServer,
-// enabling our servers to shut down gracefully.
-const httpServer = http.createServer(app);
-
-// Same ApolloServer initialization as before, plus the drain plugin
-// for our httpServer.
-const server = new ApolloServer<AppContext>({
-  typeDefs,
-  resolvers,
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-});
 
 app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
@@ -40,6 +28,19 @@ app.use(contextMiddleware);
 app.use(limiterMiddleware);
 
 const startServer = async () => {
+  // Our httpServer handles incoming requests to our Express app.
+  // Below, we tell Apollo Server to "drain" this httpServer,
+  // enabling our servers to shut down gracefully.
+  const httpServer = http.createServer(app);
+
+  // Same ApolloServer initialization as before, plus the drain plugin
+  // for our httpServer.
+  const server = new ApolloServer<AppContext>({
+    typeDefs,
+    resolvers,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  });
+
   // Ensure we wait for our server to start
   await server.start();
 
@@ -56,6 +57,7 @@ const startServer = async () => {
   app.get("/ip", (request, response) => response.send(request.ip));
 
   app.use(Sentry.Handlers.errorHandler());
+  app.use(errorHandlerMiddleware);
 
   await new Promise<void>((resolve) => {
     httpServer.listen({ port: 4000 }, resolve);
@@ -64,11 +66,4 @@ const startServer = async () => {
   logger.info("🚀 Server ready at http://localhost:4000/graphql");
 };
 
-(async () => {
-  try {
-    await startServer();
-  } catch (e) {
-    Sentry.captureException(e);
-    logger.error({ e });
-  }
-})();
+startServer();

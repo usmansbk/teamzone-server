@@ -1,6 +1,6 @@
 import { OAuth2Client } from "google-auth-library";
 import { GraphQLError } from "graphql";
-import { INVALID_TOKEN_ERROR } from "src/constants/responseCodes";
+import { INVALID_TOKEN_ERROR } from "src/constants/errors";
 
 export default async function verifyGoogleIdToken(idToken: string) {
   const client = new OAuth2Client({
