@@ -4,7 +4,7 @@ type Team {
   photo: URL
   inviteCode: ID
   teammates: [TeamMember]!
-  owner: Profile!
+  owner: User!
   createdAt: DateTime!
   updatedAt: DateTime
 }
@@ -17,7 +17,7 @@ enum TeamRole {
 type TeamMember {
   id: ID!
   team: Team!
-  member: Profile!
+  member: User!
   joinedAt: DateTime!
   role: TeamRole
 }

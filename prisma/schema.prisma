@@ -10,30 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Profile {
-  id           String       @id @default(uuid())
-  firstName    String
-  lastName     String
-  countryCode  String?
-  timezone     String?
-  locale       String?
-  pictureUrl   String?
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  owner        User?        @relation(fields: [ownerId], references: [id], onDelete: SetNull)
-  ownerId      String?      @unique
-  teams        TeamMember[]
-  createdTeams Team[]
-}
-
 model User {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  emailVerified Boolean  @default(false)
+  id            String       @id @default(uuid())
+  email         String       @unique
+  emailVerified Boolean      @default(false)
+  firstName     String
+  lastName      String?
+  countryCode   String?
+  timezone      String?
   locale        String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  profile       Profile?
+  pictureUrl    String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  teams         TeamMember[]
+  createdTeams  Team[]
 }
 
 enum TeamRole {
@@ -45,7 +35,7 @@ model TeamMember {
   id       String   @id @default(uuid())
   team     Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
   teamId   String
-  member   Profile  @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  member   User     @relation(fields: [memberId], references: [id], onDelete: Cascade)
   memberId String
   joinedAt DateTime @default(now())
   role     TeamRole @default(TEAMMATE)
@@ -55,7 +45,7 @@ model Team {
   id         String       @id @default(uuid())
   inviteCode String
   teammates  TeamMember[]
-  owner      Profile      @relation(fields: [ownerId], references: [id])
+  owner      User         @relation(fields: [ownerId], references: [id])
   ownerId    String
   name       String
   isArchived Boolean      @default(false)

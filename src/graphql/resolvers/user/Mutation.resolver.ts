@@ -33,13 +33,9 @@ export default {
             email,
             emailVerified,
             locale,
-            profile: {
-              create: {
-                firstName,
-                lastName,
-                pictureUrl,
-              },
-            },
+            firstName,
+            lastName,
+            pictureUrl,
           },
         });
       }

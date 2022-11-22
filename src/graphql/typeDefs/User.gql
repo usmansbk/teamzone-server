@@ -2,7 +2,15 @@ type User {
   id: ID!
   email: EmailAddress! @auth(rules: [{ allow: owner, identityClaim: "id" }])
   emailVerified: Boolean!
-  profile: Profile
+  firstName: String!
+  lastName: String!
+  fullName: String!
+  picture: URL
+  countryCode: CountryCode
+  timezone: TimeZone
+  locale: Locale
+  teams: [TeamMember]! @auth(rules: [{ allow: owner, identityClaim: "id" }])
+  createdTeams: [Team]! @auth(rules: [{ allow: owner, identityClaim: "id" }])
   createdAt: DateTime!
   updatedAt: DateTime
 }
@@ -17,4 +25,11 @@ type AuthPayload {
 
 type Mutation {
   loginWithGoogle(idToken: JWT!): AuthPayload!
+  updateCurrentUserFullName(
+    firstName: NonEmptyString!
+    lastName: NonEmptyString!
+  ): User! @auth
+  updateCurrentUserTimeZone(timezone: TimeZone!): User! @auth
+  updateCurrentUserCountry(countryCode: CountryCode!): User! @auth
+  updateCurrentUserLocale(locale: Locale!): User! @auth
 }
