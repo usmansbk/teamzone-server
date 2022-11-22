@@ -23,4 +23,5 @@ type Mutation {
   ): Profile!
   updateCurrentUserTimeZone(timezone: TimeZone!): Profile!
   updateCurrentUserCountry(countryCode: CountryCode!): Profile!
+  updateCurrentUserLocale(locale: Locale!): Profile!
 }
