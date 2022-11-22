@@ -4,15 +4,22 @@ type Team {
   photo: URL
   inviteCode: ID
   teammates: [TeamMember]!
+  owner: Profile!
   createdAt: DateTime!
   updatedAt: DateTime
+}
+
+enum TeamRole {
+  ADMIN
+  TEAMMATE
 }
 
 type TeamMember {
   id: ID!
   team: Team!
-  profile: Profile!
+  member: Profile!
   joinedAt: DateTime!
+  role: TeamRole
 }
 
 type Query {
