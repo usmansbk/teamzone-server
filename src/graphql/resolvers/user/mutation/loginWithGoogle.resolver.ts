@@ -32,11 +32,11 @@ export default {
           data: {
             email,
             emailVerified,
+            locale,
             profile: {
               create: {
                 firstName,
                 lastName,
-                locale,
                 pictureUrl,
               },
             },
