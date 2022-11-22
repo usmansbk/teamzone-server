@@ -1,6 +1,4 @@
-import { GraphQLError } from "graphql";
 import { nanoid } from "nanoid";
-import { AUTHORIZATION_ERROR } from "src/constants/errors";
 import type { AppContext, CreateTeamInput, UpdateTeamInput } from "src/types";
 
 export default {
@@ -32,8 +30,10 @@ export default {
       const { prismaClient, currentUser } = context;
       const { id, name } = input;
 
-      const team = await prismaClient.team.findFirst({
+      // check current user has permission
+      await prismaClient.team.findFirstOrThrow({
         where: {
+          id,
           OR: [
             {
               ownerId: currentUser!.id,
@@ -49,14 +49,6 @@ export default {
           ],
         },
       });
-
-      if (!team) {
-        throw new GraphQLError(AUTHORIZATION_ERROR, {
-          extensions: {
-            code: AUTHORIZATION_ERROR,
-          },
-        });
-      }
 
       return prismaClient.team.update({
         data: {
@@ -69,13 +61,15 @@ export default {
     },
     async deleteTeam(
       parent: unknown,
-      { id }: { id: string },
+      { teamId }: { teamId: string },
       context: AppContext
     ) {
       const { prismaClient, currentUser } = context;
 
-      const team = await prismaClient.team.findFirst({
+      // check current user has permission
+      await prismaClient.team.findFirstOrThrow({
         where: {
+          id: teamId,
           OR: [
             {
               ownerId: currentUser!.id,
@@ -92,17 +86,9 @@ export default {
         },
       });
 
-      if (!team) {
-        throw new GraphQLError(AUTHORIZATION_ERROR, {
-          extensions: {
-            code: AUTHORIZATION_ERROR,
-          },
-        });
-      }
-
       return prismaClient.team.delete({
         where: {
-          id,
+          id: teamId,
         },
       });
     },
@@ -113,6 +99,7 @@ export default {
     ) {
       const { prismaClient, currentUser } = context;
 
+      // check current user is not the owner or member
       const team = await prismaClient.team.findFirstOrThrow({
         where: {
           inviteCode,
@@ -175,13 +162,15 @@ export default {
     },
     async removeTeammates(
       parent: unknown,
-      { memberIds }: { memberIds: string[] },
+      { memberIds, teamId }: { teamId: string; memberIds: string[] },
       context: AppContext
     ) {
       const { prismaClient, currentUser } = context;
 
-      const team = await prismaClient.team.findFirst({
+      // check current user has permission
+      await prismaClient.team.findFirstOrThrow({
         where: {
+          id: teamId,
           OR: [
             {
               ownerId: currentUser!.id,
@@ -198,16 +187,11 @@ export default {
         },
       });
 
-      if (!team) {
-        throw new GraphQLError(AUTHORIZATION_ERROR, {
-          extensions: {
-            code: AUTHORIZATION_ERROR,
-          },
-        });
-      }
-
       return prismaClient.teamMember.deleteMany({
         where: {
+          team: {
+            id: teamId,
+          },
           AND: [
             {
               id: {
@@ -227,13 +211,15 @@ export default {
     },
     async archiveTeam(
       parent: unknown,
-      { id }: { id: string },
+      { teamId }: { teamId: string },
       context: AppContext
     ) {
       const { prismaClient, currentUser } = context;
 
-      const team = await prismaClient.team.findFirst({
+      // check current user has permission
+      await prismaClient.team.findFirstOrThrow({
         where: {
+          id: teamId,
           OR: [
             {
               ownerId: currentUser!.id,
@@ -250,17 +236,9 @@ export default {
         },
       });
 
-      if (!team) {
-        throw new GraphQLError(AUTHORIZATION_ERROR, {
-          extensions: {
-            code: AUTHORIZATION_ERROR,
-          },
-        });
-      }
-
       return prismaClient.team.update({
         where: {
-          id,
+          id: teamId,
         },
         data: {
           isArchived: true,
@@ -269,13 +247,15 @@ export default {
     },
     async unarchiveTeam(
       parent: unknown,
-      { id }: { id: string },
+      { teamId }: { teamId: string },
       context: AppContext
     ) {
       const { prismaClient, currentUser } = context;
 
-      const team = await prismaClient.team.findFirst({
+      // check current user has permission
+      await prismaClient.team.findFirstOrThrow({
         where: {
+          id: teamId,
           OR: [
             {
               ownerId: currentUser!.id,
@@ -292,20 +272,84 @@ export default {
         },
       });
 
-      if (!team) {
-        throw new GraphQLError(AUTHORIZATION_ERROR, {
-          extensions: {
-            code: AUTHORIZATION_ERROR,
-          },
-        });
-      }
-
       return prismaClient.team.update({
         where: {
-          id,
+          id: teamId,
         },
         data: {
           isArchived: false,
+        },
+      });
+    },
+    async addTeamMemberToAdmin(
+      parent: unknown,
+      { teamId, memberId }: { teamId: string; memberId: string },
+      context: AppContext
+    ) {
+      const { prismaClient, currentUser } = context;
+
+      // check current user has permission
+      await prismaClient.team.findFirstOrThrow({
+        where: {
+          id: teamId,
+          OR: [
+            {
+              ownerId: currentUser!.id,
+            },
+            {
+              teammates: {
+                some: {
+                  memberId: currentUser!.id,
+                  role: "ADMIN",
+                },
+              },
+            },
+          ],
+        },
+      });
+
+      return prismaClient.teamMember.update({
+        where: {
+          id: memberId,
+        },
+        data: {
+          role: "ADMIN",
+        },
+      });
+    },
+    async removeTeamMemberFromAdmin(
+      parent: unknown,
+      { teamId, memberId }: { teamId: string; memberId: string },
+      context: AppContext
+    ) {
+      const { prismaClient, currentUser } = context;
+
+      // check current user has permission
+      await prismaClient.team.findFirstOrThrow({
+        where: {
+          id: teamId,
+          OR: [
+            {
+              ownerId: currentUser!.id,
+            },
+            {
+              teammates: {
+                some: {
+                  memberId: currentUser!.id,
+                  role: "ADMIN",
+                },
+              },
+            },
+          ],
+        },
+      });
+
+      return prismaClient.teamMember.update({
+        where: {
+          id: memberId,
+        },
+        data: {
+          role: "TEAMMATE",
         },
       });
     },

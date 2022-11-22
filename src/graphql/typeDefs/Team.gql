@@ -29,12 +29,14 @@ type Query {
 type Mutation {
   createTeam(input: CreateTeamInput!): Team! @auth
   updateTeam(input: UpdateTeamInput!): Team! @auth
-  deleteTeam(id: ID!): Team! @auth
-  archiveTeam(id: ID!): Team! @auth
-  unarchiveTeam(id: ID!): Team! @auth
+  deleteTeam(teamId: ID!): Team! @auth
+  archiveTeam(teamId: ID!): Team! @auth
+  unarchiveTeam(teamId: ID!): Team! @auth
   joinTeam(inviteCode: ID!): TeamMember! @auth
   leaveTeam(teamId: ID!): TeamMember! @auth
-  removeTeammates(memberIds: [ID!]!): [TeamMember!]! @auth
+  removeTeammates(memberIds: [ID!]!, teamId: ID!): [TeamMember!]! @auth
+  addTeamMemberToAdmin(memberId: ID!, teamId: ID!): TeamMember! @auth
+  removeTeamMemberFromAdmin(memberId: ID!, teamId: ID!): TeamMember! @auth
 }
 
 input CreateTeamInput {

@@ -17,15 +17,16 @@ const contextMiddleware = async (
   if (authorization) {
     try {
       const { id } = jwt.verify(authorization) as { id: string };
-      const currentUser = await prismaClient.profile.findUnique({
-        where: { ownerId: id },
+      const currentUser = await prismaClient.user.findUnique({
+        where: { id },
       });
 
       if (currentUser) {
         req.context.currentUser = currentUser;
 
         Sentry.setUser({
-          id: currentUser?.id,
+          id: currentUser.id,
+          email: currentUser.email,
         });
 
         if (currentUser.locale) {

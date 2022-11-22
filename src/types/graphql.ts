@@ -3,6 +3,7 @@ export type AuthStrategy = "owner";
 export interface AuthRule {
   allow: AuthStrategy;
   identityClaim: string;
+  ownerField: string;
 }
 
 export interface CreateTeamInput {

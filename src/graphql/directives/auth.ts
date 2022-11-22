@@ -1,6 +1,7 @@
 import { defaultFieldResolver, GraphQLError, GraphQLSchema } from "graphql";
 import { MapperKind, mapSchema, getDirective } from "@graphql-tools/utils";
 import type { AppContext, AuthRule } from "src/types";
+import type { Profile } from "@prisma/client";
 import {
   AUTHENTICATION_ERROR,
   AUTHORIZATION_ERROR,
@@ -41,16 +42,21 @@ export default function authDirectiveTransformer(
             const { rules } = authDirective as { rules: AuthRule[] };
 
             if (rules) {
-              const checks = rules.map(({ allow, identityClaim }) => {
-                switch (allow) {
-                  case "owner": {
-                    return source[identityClaim] === currentUser.id;
-                  }
-                  default: {
-                    return false;
+              const checks = rules.map(
+                ({ allow, identityClaim, ownerField }) => {
+                  switch (allow) {
+                    case "owner": {
+                      return (
+                        source[identityClaim] ===
+                        currentUser[ownerField as keyof Profile]
+                      );
+                    }
+                    default: {
+                      return false;
+                    }
                   }
                 }
-              });
+              );
 
               if (!checks.some((allowed) => allowed)) {
                 throw new GraphQLError(t(AUTHORIZATION_ERROR), {

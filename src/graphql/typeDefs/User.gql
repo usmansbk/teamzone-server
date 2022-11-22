@@ -1,6 +1,6 @@
-type User @auth(rules: [{ allow: owner, identityClaim: "id" }]) {
+type User {
   id: ID!
-  email: EmailAddress!
+  email: EmailAddress! @auth(rules: [{ allow: owner, identityClaim: "id" }])
   emailVerified: Boolean!
   profile: Profile
   createdAt: DateTime!
