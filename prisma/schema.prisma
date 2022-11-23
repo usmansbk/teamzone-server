@@ -19,11 +19,13 @@ model User {
   countryCode   String?
   timezone      String?
   locale        String?
+  avatar        File?        @relation(fields: [avatarId], references: [id], onDelete: Cascade)
   pictureUrl    String?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   teams         TeamMember[]
   createdTeams  Team[]
+  avatarId      String?
 }
 
 enum TeamRole {
@@ -46,9 +48,20 @@ model Team {
   inviteCode String
   teammates  TeamMember[]
   owner      User         @relation(fields: [ownerId], references: [id])
+  logo       File?        @relation(fields: [logoId], references: [id], onDelete: Cascade)
   ownerId    String
   name       String
   isArchived Boolean      @default(false)
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
+  logoId     String?
+}
+
+model File {
+  id          String @id @default(uuid())
+  bucket      String
+  key         String
+  size        String
+  userAvatars User[]
+  teamLogos   Team[]
 }
