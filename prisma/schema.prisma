@@ -58,10 +58,12 @@ model Team {
 }
 
 model File {
-  id          String @id @default(uuid())
+  id          String  @id @default(uuid())
+  name        String?
   bucket      String
   key         String
-  size        String
+  size        Int
+  mimetype    String
   userAvatars User[]
   teamLogos   Team[]
 }
