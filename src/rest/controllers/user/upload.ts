@@ -13,10 +13,10 @@ export default function uploadPicture(
   next: NextFunction
 ) {
   upload(req, res, async (err) => {
-    try {
-      if (err) {
-        next(err);
-      } else {
+    if (err) {
+      next(err);
+    } else {
+      try {
         const {
           file,
           params,
@@ -51,16 +51,16 @@ export default function uploadPicture(
         } else {
           throw new Error("No file");
         }
+      } catch (e) {
+        logger.error({ e });
+        next(
+          new GraphQLError(req.t(FILE_UPLOAD_ERROR), {
+            extensions: {
+              code: FILE_UPLOAD_ERROR,
+            },
+          })
+        );
       }
-    } catch (e) {
-      logger.error({ e });
-      next(
-        new GraphQLError(req.t(FILE_UPLOAD_ERROR), {
-          extensions: {
-            code: FILE_UPLOAD_ERROR,
-          },
-        })
-      );
     }
   });
 }
