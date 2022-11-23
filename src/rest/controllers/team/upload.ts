@@ -3,6 +3,7 @@ import { GraphQLError } from "graphql";
 import { FILE_UPLOAD_ERROR } from "src/constants/errors";
 import uploader from "src/rest/utils/uploader";
 import { UploadFile } from "src/types/index";
+import logger from "src/utils/logger";
 
 const upload = uploader.single("logo");
 
@@ -48,15 +49,18 @@ export default function uploadLogo(
             avatar,
           });
         } else {
-          throw new GraphQLError(req.t(FILE_UPLOAD_ERROR), {
-            extensions: {
-              code: FILE_UPLOAD_ERROR,
-            },
-          });
+          throw new Error("No file");
         }
       }
     } catch (e) {
-      next(e);
+      logger.error({ e });
+      next(
+        new GraphQLError(req.t(FILE_UPLOAD_ERROR), {
+          extensions: {
+            code: FILE_UPLOAD_ERROR,
+          },
+        })
+      );
     }
   });
 }
