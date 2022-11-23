@@ -13,6 +13,7 @@ import i18nMiddleware from "./middlewares/i18n";
 import contextMiddleware from "./middlewares/context";
 import limiterMiddleware from "./middlewares/apiRateLimiter";
 import errorHandlerMiddleware from "./middlewares/errorHandler";
+import v1Router from "./rest/routes";
 import type { AppContext } from "./types";
 
 const app = express();
@@ -43,6 +44,10 @@ const startServer = async () => {
   // Ensure we wait for our server to start
   await server.start();
 
+  app.set("trust proxy", 1);
+  app.get("/ip", (request, response) => response.send(request.ip));
+
+  app.use("/v1", v1Router);
   app.use(
     "/graphql",
     // expressMiddleware accepts the same arguments:
@@ -51,9 +56,6 @@ const startServer = async () => {
       context: async ({ req }) => req.context,
     })
   );
-
-  app.set("trust proxy", 1);
-  app.get("/ip", (request, response) => response.send(request.ip));
 
   app.use(Sentry.Handlers.errorHandler());
   app.use(errorHandlerMiddleware);
