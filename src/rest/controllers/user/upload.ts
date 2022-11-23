@@ -1,12 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import multer from "multer";
+import uploader from "src/rest/utils/uploader";
 
-const upload = multer({
-  dest: "/upload",
-  limits: {
-    fileSize: 2000000,
-  },
-}).single("avatar");
+const upload = uploader.single("avatar");
 
 export default function uploadPicture(
   req: Request,
