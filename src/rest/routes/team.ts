@@ -3,6 +3,6 @@ import uploadLogo from "../controllers/team/upload";
 
 const router = express.Router();
 
-router.post("/logo", uploadLogo);
+router.post("/:id/logo", uploadLogo);
 
 export default router;

@@ -20,3 +20,13 @@ declare global {
     }
   }
 }
+
+export interface UploadFile {
+  fieldname: string;
+  originalname: string;
+  encoding: string;
+  mimetype: string;
+  size: number;
+  bucket: string;
+  key: string;
+}
