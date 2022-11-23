@@ -55,7 +55,10 @@ export default function authDirectiveTransformer(
               if (!checks.some((allowed) => allowed)) {
                 throw new GraphQLError(t(AUTHORIZATION_ERROR), {
                   extensions: {
-                    code: AUTHENTICATION_ERROR,
+                    code: AUTHORIZATION_ERROR,
+                    http: {
+                      status: 401,
+                    },
                   },
                 });
               }
