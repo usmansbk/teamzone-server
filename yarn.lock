@@ -265,7 +265,7 @@
   dependencies:
     tslib "^2.3.1"
 
-"@aws-sdk/client-s3@^3.216.0":
+"@aws-sdk/client-s3@^3.0.0", "@aws-sdk/client-s3@^3.216.0":
   version "3.216.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-s3/-/client-s3-3.216.0.tgz#a4c8678422a6f6b521314f922ef07ed0941f2ce8"
   integrity sha512-zja00+kLB7Kw8X326ueXvCgMJNF5iuTPrFDUgI+JClk1rjXVMa/T1sOLTgZg9W2pbtOO+3GloxwNGVygXNjt8A==
@@ -2725,7 +2725,7 @@
     "@types/qs" "*"
     "@types/range-parser" "*"
 
-"@types/express@^4.17.13", "@types/express@^4.17.14":
+"@types/express@*", "@types/express@^4.17.13", "@types/express@^4.17.14":
   version "4.17.14"
   resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.14.tgz#143ea0557249bc1b3b54f15db4c81c3d4eb3569c"
   integrity sha512-TEbt+vaPFQ+xpxFLFssxUDXj5cWCxZJjIcB7Yg0k0GMHGtgtQgpvx/MUQUeAkNbA9AAGrwkAsoeItdTgS7FMyg==
@@ -2802,6 +2802,21 @@
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-3.0.1.tgz#5f8f2bca0a5863cb69bc0b0acd88c96cb1d4ae10"
   integrity sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==
+
+"@types/multer-s3@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/multer-s3/-/multer-s3-3.0.0.tgz#db798a5335d095b8944861237167d91e2c840ac5"
+  integrity sha512-s8dZjVsLBdaOaCzWjmn6x7WA1LjWgfhCgc2cIK21EI0pgrROFvooAJSrULdD+8qiW51DnYWAY8pOanBe6LLXzg==
+  dependencies:
+    "@aws-sdk/client-s3" "^3.0.0"
+    "@types/multer" "*"
+
+"@types/multer@*", "@types/multer@^1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@types/multer/-/multer-1.4.7.tgz#89cf03547c28c7bbcc726f029e2a76a7232cc79e"
+  integrity sha512-/SNsDidUFCvqqcWDwxv2feww/yqhNeTRL5CVoL3jU4Goc4kKEL10T7Eye65ZqPNi4HRx8sAEX59pV1aEH7drNA==
+  dependencies:
+    "@types/express" "*"
 
 "@types/node-fetch@^2.6.1":
   version "2.6.2"
