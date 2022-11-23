@@ -1,9 +1,8 @@
 import express from "express";
+import uploadPicture from "../controllers/user/upload";
 
 const router = express.Router();
 
-router.get("/test", (req, res) => {
-  res.send("Hello");
-});
+router.post("/picture", uploadPicture);
 
 export default router;
