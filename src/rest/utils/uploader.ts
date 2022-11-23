@@ -16,7 +16,7 @@ export default multer({
     const { t } = req;
     if (!supportedMimeTypes.includes(file.mimetype)) {
       cb(
-        new GraphQLError(t(UNSUPPORTED_FILE_TYPE_ERROR), {
+        new GraphQLError(t(UNSUPPORTED_FILE_TYPE_ERROR, { ns: "errors" }), {
           extensions: {
             code: UNSUPPORTED_FILE_TYPE_ERROR,
           },

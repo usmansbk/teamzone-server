@@ -32,11 +32,14 @@ export default function authDirectiveTransformer(
             const { currentUser, t } = context;
 
             if (!currentUser) {
-              throw new GraphQLError(t(AUTHENTICATION_ERROR), {
-                extensions: {
-                  code: AUTHENTICATION_ERROR,
-                },
-              });
+              throw new GraphQLError(
+                t(AUTHENTICATION_ERROR, { ns: "errors" }),
+                {
+                  extensions: {
+                    code: AUTHENTICATION_ERROR,
+                  },
+                }
+              );
             }
             const { rules } = authDirective as { rules: AuthRule[] };
 
@@ -53,14 +56,17 @@ export default function authDirectiveTransformer(
               });
 
               if (!checks.some((allowed) => allowed)) {
-                throw new GraphQLError(t(AUTHORIZATION_ERROR), {
-                  extensions: {
-                    code: AUTHORIZATION_ERROR,
-                    http: {
-                      status: 401,
+                throw new GraphQLError(
+                  t(AUTHORIZATION_ERROR, { ns: "errors" }),
+                  {
+                    extensions: {
+                      code: AUTHORIZATION_ERROR,
+                      http: {
+                        status: 401,
+                      },
                     },
-                  },
-                });
+                  }
+                );
               }
             }
             return resolve(source, args, context, info);

@@ -54,7 +54,7 @@ export default function uploadPicture(
       } catch (e) {
         logger.error({ e });
         next(
-          new GraphQLError(req.t(FILE_UPLOAD_ERROR), {
+          new GraphQLError(req.t(FILE_UPLOAD_ERROR, { ns: "errors" }), {
             extensions: {
               code: FILE_UPLOAD_ERROR,
             },

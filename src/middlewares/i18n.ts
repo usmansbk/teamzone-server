@@ -12,6 +12,8 @@ i18next
   .init({
     initImmediate: false,
     fallbackLng: "en",
+    ns: ["translation", "errors"],
+    defaultNS: "translation",
     preload: readdirSync(localesDir).filter((fileName) => {
       const joinedPath = join(localesDir, fileName);
       return lstatSync(joinedPath).isDirectory();

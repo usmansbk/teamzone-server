@@ -1,5 +1,5 @@
 import { OAuth2Client } from "google-auth-library";
-import { GraphQLError } from "graphql";
+import { JsonWebTokenError } from "jsonwebtoken";
 import { INVALID_TOKEN_ERROR } from "src/constants/errors";
 
 export default async function verifyGoogleIdToken(idToken: string) {
@@ -15,9 +15,7 @@ export default async function verifyGoogleIdToken(idToken: string) {
   const payload = ticket.getPayload();
 
   if (!payload || !(payload.email && payload.given_name)) {
-    throw new GraphQLError(INVALID_TOKEN_ERROR, {
-      extensions: { code: INVALID_TOKEN_ERROR },
-    });
+    throw new JsonWebTokenError(INVALID_TOKEN_ERROR);
   }
 
   return {

@@ -9,7 +9,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
   if (!currentUser) {
     return next(
-      new GraphQLError(t(AUTHENTICATION_ERROR), {
+      new GraphQLError(t(AUTHENTICATION_ERROR, { ns: "errors" }), {
         extensions: {
           code: AUTHENTICATION_ERROR,
         },
