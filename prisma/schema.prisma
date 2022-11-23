@@ -56,14 +56,16 @@ model Team {
 }
 
 model File {
-  id         String  @id @default(uuid())
-  name       String?
-  bucket     String
-  key        String
-  size       Int
-  mimetype   String
-  userAvatar User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  teamLogo   Team?   @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  userId     String? @unique
-  teamId     String? @unique
+  id           String   @id @default(uuid())
+  name         String?
+  bucket       String
+  key          String
+  size         Int
+  mimetype     String
+  userAvatar   User?    @relation(fields: [userAvatarId], references: [id], onDelete: Cascade)
+  teamLogo     Team?    @relation(fields: [teamLogoId], references: [id], onDelete: Cascade)
+  userAvatarId String?  @unique
+  teamLogoId   String?  @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
