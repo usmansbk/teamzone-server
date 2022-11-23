@@ -19,13 +19,12 @@ model User {
   countryCode   String?
   timezone      String?
   locale        String?
-  avatar        File?        @relation(fields: [avatarId], references: [id], onDelete: Cascade)
+  avatar        File?
   pictureUrl    String?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   teams         TeamMember[]
   createdTeams  Team[]
-  avatarId      String?
 }
 
 enum TeamRole {
@@ -48,22 +47,23 @@ model Team {
   inviteCode String
   teammates  TeamMember[]
   owner      User         @relation(fields: [ownerId], references: [id])
-  logo       File?        @relation(fields: [logoId], references: [id], onDelete: Cascade)
+  logo       File?
   ownerId    String
   name       String
   isArchived Boolean      @default(false)
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
-  logoId     String?
 }
 
 model File {
-  id          String  @id @default(uuid())
-  name        String?
-  bucket      String
-  key         String
-  size        Int
-  mimetype    String
-  userAvatars User[]
-  teamLogos   Team[]
+  id         String  @id @default(uuid())
+  name       String?
+  bucket     String
+  key        String
+  size       Int
+  mimetype   String
+  userAvatar User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  teamLogo   Team?   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  userId     String? @unique
+  teamId     String? @unique
 }

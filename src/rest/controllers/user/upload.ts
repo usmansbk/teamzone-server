@@ -12,49 +12,51 @@ export default function uploadPicture(
   next: NextFunction
 ) {
   upload(req, res, async (err) => {
-    if (err) {
-      next(err);
-    } else {
-      const {
-        file,
-        params,
-        context: { prismaClient },
-      } = req;
+    try {
+      if (err) {
+        next(err);
+      } else {
+        const {
+          file,
+          params,
+          context: { prismaClient },
+        } = req;
 
-      const { id } = params as { id: string };
+        const { id } = params as { id: string };
 
-      if (file) {
-        const { bucket, key, size, mimetype, originalname } =
-          file as unknown as UploadFile;
-        const avatar = await prismaClient.file.create({
-          data: {
-            name: originalname,
-            bucket,
-            key,
-            size,
-            mimetype,
-            userAvatars: {
-              connect: {
-                id,
+        if (file) {
+          const { bucket, key, size, mimetype, originalname } =
+            file as unknown as UploadFile;
+          const avatar = await prismaClient.file.create({
+            data: {
+              name: originalname,
+              bucket,
+              key,
+              size,
+              mimetype,
+              userAvatar: {
+                connect: {
+                  id,
+                },
               },
             },
-          },
-        });
+          });
 
-        res.status(201).json({
-          message: "File uploaded",
-          id,
-          avatar,
-        });
-      } else {
-        next(
-          new GraphQLError(req.t(FILE_UPLOAD_ERROR), {
+          res.status(201).json({
+            message: "File uploaded",
+            id,
+            avatar,
+          });
+        } else {
+          throw new GraphQLError(req.t(FILE_UPLOAD_ERROR), {
             extensions: {
               code: FILE_UPLOAD_ERROR,
             },
-          })
-        );
+          });
+        }
       }
+    } catch (e) {
+      next(e);
     }
   });
 }
