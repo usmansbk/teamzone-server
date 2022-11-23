@@ -50,8 +50,10 @@ CREATE TABLE "File" (
     "key" TEXT NOT NULL,
     "size" INTEGER NOT NULL,
     "mimetype" TEXT NOT NULL,
-    "userId" TEXT,
-    "teamId" TEXT,
+    "userAvatarId" TEXT,
+    "teamLogoId" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "File_pkey" PRIMARY KEY ("id")
 );
@@ -60,10 +62,10 @@ CREATE TABLE "File" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "File_userId_key" ON "File"("userId");
+CREATE UNIQUE INDEX "File_userAvatarId_key" ON "File"("userAvatarId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "File_teamId_key" ON "File"("teamId");
+CREATE UNIQUE INDEX "File_teamLogoId_key" ON "File"("teamLogoId");
 
 -- AddForeignKey
 ALTER TABLE "TeamMember" ADD CONSTRAINT "TeamMember_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -75,7 +77,7 @@ ALTER TABLE "TeamMember" ADD CONSTRAINT "TeamMember_memberId_fkey" FOREIGN KEY (
 ALTER TABLE "Team" ADD CONSTRAINT "Team_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "File" ADD CONSTRAINT "File_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "File" ADD CONSTRAINT "File_userAvatarId_fkey" FOREIGN KEY ("userAvatarId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "File" ADD CONSTRAINT "File_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "File" ADD CONSTRAINT "File_teamLogoId_fkey" FOREIGN KEY ("teamLogoId") REFERENCES "Team"("id") ON DELETE CASCADE ON UPDATE CASCADE;
