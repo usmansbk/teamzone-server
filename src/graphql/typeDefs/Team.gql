@@ -1,7 +1,7 @@
 type Team {
   id: ID!
   name: String!
-  photo: URL
+  logo(width: PositiveInt = 100, height: PositiveInt = 100): URL
   inviteCode: ID
   teammates: [TeamMember]!
   owner: User!

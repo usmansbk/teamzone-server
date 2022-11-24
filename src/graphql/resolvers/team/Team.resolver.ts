@@ -1,5 +1,6 @@
 import { Team, TeamMember, User } from "@prisma/client";
 import { AppContext } from "src/types";
+import fileUrl from "src/utils/fileUrl";
 
 export default {
   Team: {
@@ -31,6 +32,19 @@ export default {
     },
     isOwner(team: Team, args: never, context: AppContext) {
       return team.ownerId === context.currentUser?.id;
+    },
+    async logo(
+      team: Team,
+      args: { width: number; height: number },
+      context: AppContext
+    ): Promise<string | null> {
+      const { prismaClient } = context;
+
+      const logo = await prismaClient.team
+        .findUnique({ where: { id: team.id } })
+        .logo();
+
+      return logo && fileUrl(logo, args);
     },
   },
 };

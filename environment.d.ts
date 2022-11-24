@@ -19,6 +19,7 @@ declare global {
       AWS_SECRET_ACCESS_KEY: string;
       AWS_REGION: string;
       AWS_S3_BUCKET: string;
+      CLOUDFRONT_API_ENDPOINT: string;
     }
   }
 }

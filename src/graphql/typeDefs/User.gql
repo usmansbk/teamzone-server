@@ -5,7 +5,7 @@ type User {
   firstName: String!
   lastName: String!
   fullName: String!
-  picture: URL
+  picture(width: PositiveInt = 100, height: PositiveInt = 100): URL
   countryCode: CountryCode
   timezone: TimeZone
   locale: Locale

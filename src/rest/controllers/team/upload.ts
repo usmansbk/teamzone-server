@@ -52,7 +52,7 @@ export default function uploadLogo(
           throw new Error("No file");
         }
       } catch (e) {
-        logger.error({ e });
+        logger.error({ message: (e as Error).message });
         next(
           new GraphQLError(req.t(FILE_UPLOAD_ERROR, { ns: "errors" }), {
             extensions: {
