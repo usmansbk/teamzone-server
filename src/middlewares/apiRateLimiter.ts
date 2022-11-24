@@ -2,7 +2,7 @@ import type { Request } from "express";
 import rateLimit from "express-rate-limit";
 import RedisStore from "rate-limit-redis";
 import redisClient from "src/services/redis";
-import { TOO_MANY_API_REQUESTS } from "src/constants/responseCodes";
+import { TOO_MANY_API_REQUESTS } from "src/constants/errors";
 
 const MAX_API_REQUESTS = 2000;
 
@@ -13,7 +13,7 @@ const limiterMiddleware = rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
   message: (req: Request) => {
     const { t } = req;
-    return t(TOO_MANY_API_REQUESTS, { max: MAX_API_REQUESTS });
+    return t(TOO_MANY_API_REQUESTS, { max: MAX_API_REQUESTS, ns: "errors" });
   },
   store: new RedisStore({
     // @ts-expect-error - Known issue: the `call` function is not present in @types/ioredis
