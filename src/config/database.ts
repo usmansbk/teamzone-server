@@ -7,10 +7,9 @@ prismaClient.$use(async (params, next) => {
   const result = await next(params);
 
   if (params.model === "File" && params.action === "delete") {
-    await s3.deleteObject({
-      Bucket: process.env.AWS_S3_BUCKET,
-      Key: (result as File).key,
-    });
+    const { key: Key, bucket: Bucket } = result as File;
+
+    await s3.deleteObject({ Key, Bucket });
   }
 
   return result;
