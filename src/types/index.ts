@@ -1,5 +1,6 @@
 import type { TFunction } from "i18next";
 import type { PrismaClient } from "@prisma/client";
+import type { Redis } from "ioredis";
 import type { JwtUtil } from "src/utils/jwt";
 import { User } from "@sentry/node";
 
@@ -9,6 +10,7 @@ export interface AppContext {
   language: string;
   t: TFunction<"translation", undefined>;
   prismaClient: PrismaClient;
+  redisClient: Redis;
   jwt: JwtUtil;
   currentUser?: User | null;
 }

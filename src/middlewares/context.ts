@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import prismaClient from "src/config/database";
 import Sentry from "src/config/sentry";
+import redisClient from "src/services/redis";
 import jwt from "src/utils/jwt";
 
 const contextMiddleware = async (
@@ -10,7 +11,7 @@ const contextMiddleware = async (
 ) => {
   const { t, language, headers, i18n } = req;
 
-  req.context = { t, language, prismaClient, jwt };
+  req.context = { t, language, prismaClient, jwt, redisClient };
 
   const { authorization } = headers;
 
