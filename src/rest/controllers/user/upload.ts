@@ -28,19 +28,35 @@ export default function uploadPicture(
         if (file) {
           const { bucket, key, size, mimetype, originalname } =
             file as unknown as UploadFile;
-          const avatar = await prismaClient.file.create({
-            data: {
-              name: originalname,
-              bucket,
-              key,
-              size,
-              mimetype,
-              userAvatar: {
-                connect: {
-                  id,
+
+          const avatar = await prismaClient.$transaction(async (t) => {
+            const oldAvatar = await t.file.findFirst({
+              where: {
+                userAvatarId: id,
+              },
+            });
+
+            if (oldAvatar) {
+              await t.file.delete({
+                where: {
+                  id: oldAvatar.id,
+                },
+              });
+            }
+            return t.file.create({
+              data: {
+                name: originalname,
+                bucket,
+                key,
+                size,
+                mimetype,
+                userAvatar: {
+                  connect: {
+                    id,
+                  },
                 },
               },
-            },
+            });
           });
 
           res.status(201).json({

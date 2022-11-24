@@ -28,19 +28,39 @@ export default function uploadLogo(
         if (file) {
           const { bucket, key, size, mimetype, originalname } =
             file as unknown as UploadFile;
-          const avatar = await prismaClient.file.create({
-            data: {
-              name: originalname,
-              bucket,
-              key,
-              size,
-              mimetype,
-              teamLogo: {
-                connect: {
-                  id,
+
+          const avatar = await prismaClient.$transaction(async (t) => {
+            const oldLogo = await t.file.findFirst({
+              where: {
+                teamLogoId: id,
+              },
+            });
+
+            if (oldLogo) {
+              await t.file.delete({
+                where: {
+                  id: oldLogo.id,
+                },
+                select: {
+                  key: true,
+                },
+              });
+            }
+
+            return t.file.create({
+              data: {
+                name: originalname,
+                bucket,
+                key,
+                size,
+                mimetype,
+                teamLogo: {
+                  connect: {
+                    id,
+                  },
                 },
               },
-            },
+            });
           });
 
           res.status(201).json({
