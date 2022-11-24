@@ -1,6 +1,6 @@
 import { Team, TeamMember, User } from "@prisma/client";
 import { AppContext } from "src/types";
-import fileUrl from "src/utils/fileUrl";
+import fileUrl from "src/utils/imageFileUrl";
 
 export default {
   Team: {
