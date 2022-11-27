@@ -15,9 +15,10 @@ const contextMiddleware = async (
 
   const { authorization } = headers;
 
-  if (authorization) {
+  if (authorization?.startsWith("Bearer")) {
+    const token = authorization.split(" ")[1];
     try {
-      const { id } = jwt.verify(authorization) as { id: string };
+      const { id } = jwt.verify(token) as { id: string };
       // TODO: cache currentUser to redis
       const currentUser = await prismaClient.user.findUnique({
         where: { id },
