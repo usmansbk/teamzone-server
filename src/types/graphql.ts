@@ -12,3 +12,14 @@ export interface CreateTeamInput {
 export interface UpdateTeamInput extends CreateTeamInput {
   id: string;
 }
+
+export type SocialProvider = "GOOGLE" | "GITHUB";
+
+export interface UserPayload {
+  firstName: string;
+  lastName: string;
+  email: string;
+  pictureUrl?: string;
+  locale?: string;
+  emailVerified: boolean;
+}

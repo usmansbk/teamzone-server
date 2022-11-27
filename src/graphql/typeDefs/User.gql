@@ -24,9 +24,16 @@ type AuthPayload {
   token: JWT
 }
 
+enum SocialProvider {
+  GOOGLE
+  GITHUB
+}
+
 type Mutation {
-  loginWithGoogle(code: String!): AuthPayload!
-  loginWithGithub(code: String!): AuthPayload!
+  loginWithSocialProvider(
+    provider: SocialProvider!
+    code: String!
+  ): AuthPayload!
   updateCurrentUserFullName(
     firstName: NonEmptyString!
     lastName: NonEmptyString!

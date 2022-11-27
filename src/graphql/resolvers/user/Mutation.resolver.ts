@@ -1,16 +1,31 @@
+import { GraphQLError } from "graphql";
+import verifyGithubCode from "src/services/github-oauth";
 import verifyGoogleCode from "src/services/google-oauth";
-import { AppContext } from "src/types";
+import { AppContext, SocialProvider, UserPayload } from "src/types";
+import { AUTHENTICATION_ERROR } from "src/constants/errors";
 
 export default {
   Mutation: {
-    loginWithGoogle: async (
+    loginWithSocialProvider: async (
       _parent: unknown,
-      { code }: { code: string },
+      { code, provider }: { code: string; provider: SocialProvider },
       context: AppContext
     ) => {
-      const { prismaClient, jwt } = context;
+      const { prismaClient, jwt, t } = context;
 
-      const payload = await verifyGoogleCode(code);
+      let payload: UserPayload;
+
+      if (provider === "GOOGLE") {
+        payload = await verifyGoogleCode(code);
+      } else if (provider === "GITHUB") {
+        payload = await verifyGithubCode(code);
+      } else {
+        throw new GraphQLError(t(AUTHENTICATION_ERROR), {
+          extensions: {
+            code: AUTHENTICATION_ERROR,
+          },
+        });
+      }
 
       let user = await prismaClient.user.findUnique({
         where: {
