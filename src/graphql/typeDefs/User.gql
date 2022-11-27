@@ -25,7 +25,8 @@ type AuthPayload {
 }
 
 type Mutation {
-  loginWithGoogle(idToken: JWT!): AuthPayload!
+  loginWithGoogle(code: String!): AuthPayload!
+  loginWithGithub(code: String!): AuthPayload!
   updateCurrentUserFullName(
     firstName: NonEmptyString!
     lastName: NonEmptyString!

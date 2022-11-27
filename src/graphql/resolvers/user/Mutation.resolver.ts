@@ -5,12 +5,12 @@ export default {
   Mutation: {
     loginWithGoogle: async (
       _parent: unknown,
-      { idToken }: { idToken: string },
+      { code }: { code: string },
       context: AppContext
     ) => {
       const { prismaClient, jwt } = context;
 
-      const payload = await verifyGoogleIdToken(idToken);
+      const payload = await verifyGoogleIdToken(code);
 
       let user = await prismaClient.user.findUnique({
         where: {
