@@ -1,9 +1,9 @@
-import { GraphQLError } from "graphql";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import { nanoid } from "nanoid";
 import { UNSUPPORTED_FILE_TYPE_ERROR } from "src/constants/errors";
 import { s3Client } from "src/services/s3";
+import QueryError from "src/utils/errors/QueryError";
 
 const supportedMimeTypes = ["image/jpeg", "image/png"];
 
@@ -15,13 +15,7 @@ export default multer({
   fileFilter(req, file, cb) {
     const { t } = req;
     if (!supportedMimeTypes.includes(file.mimetype)) {
-      cb(
-        new GraphQLError(t(UNSUPPORTED_FILE_TYPE_ERROR, { ns: "errors" }), {
-          extensions: {
-            code: UNSUPPORTED_FILE_TYPE_ERROR,
-          },
-        })
-      );
+      cb(new QueryError(t(UNSUPPORTED_FILE_TYPE_ERROR, { ns: "errors" })));
     } else {
       cb(null, true);
     }

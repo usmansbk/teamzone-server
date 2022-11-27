@@ -1,7 +1,7 @@
-import { GraphQLError } from "graphql";
 import verifyGithubCode from "src/services/github-oauth";
 import verifyGoogleCode from "src/services/google-oauth";
 import { AppContext, SocialProvider, UserPayload } from "src/types";
+import AuthenticationError from "src/utils/errors/AuthenticationError";
 import { AUTHENTICATION_ERROR } from "src/constants/errors";
 
 export default {
@@ -20,11 +20,7 @@ export default {
       } else if (provider === "GITHUB") {
         payload = await verifyGithubCode(code);
       } else {
-        throw new GraphQLError(t(AUTHENTICATION_ERROR), {
-          extensions: {
-            code: AUTHENTICATION_ERROR,
-          },
-        });
+        throw new AuthenticationError(t(AUTHENTICATION_ERROR));
       }
 
       let user = await prismaClient.user.findUnique({

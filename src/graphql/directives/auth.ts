@@ -1,6 +1,8 @@
-import { defaultFieldResolver, GraphQLError, GraphQLSchema } from "graphql";
+import { defaultFieldResolver, GraphQLSchema } from "graphql";
 import { MapperKind, mapSchema, getDirective } from "@graphql-tools/utils";
 import type { AppContext, AuthRule } from "src/types";
+import AuthenticationError from "src/utils/errors/AuthenticationError";
+import ForbiddenError from "src/utils/errors/ForbiddenError";
 import {
   AUTHENTICATION_ERROR,
   AUTHORIZATION_ERROR,
@@ -32,13 +34,8 @@ export default function authDirectiveTransformer(
             const { currentUser, t } = context;
 
             if (!currentUser) {
-              throw new GraphQLError(
-                t(AUTHENTICATION_ERROR, { ns: "errors" }),
-                {
-                  extensions: {
-                    code: AUTHENTICATION_ERROR,
-                  },
-                }
+              throw new AuthenticationError(
+                t(AUTHENTICATION_ERROR, { ns: "errors" })
               );
             }
             const { rules } = authDirective as { rules: AuthRule[] };
@@ -56,16 +53,8 @@ export default function authDirectiveTransformer(
               });
 
               if (!checks.some((allowed) => allowed)) {
-                throw new GraphQLError(
-                  t(AUTHORIZATION_ERROR, { ns: "errors" }),
-                  {
-                    extensions: {
-                      code: AUTHORIZATION_ERROR,
-                      http: {
-                        status: 401,
-                      },
-                    },
-                  }
+                throw new ForbiddenError(
+                  t(AUTHORIZATION_ERROR, { ns: "errors" })
                 );
               }
             }

@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { GraphQLError } from "graphql";
 import { FILE_UPLOAD_ERROR } from "src/constants/errors";
 import uploader from "src/rest/utils/uploader";
 import { UploadFile } from "src/types/index";
+import QueryError from "src/utils/errors/QueryError";
 import logger from "src/utils/logger";
 
 const upload = uploader.single("avatar");
@@ -13,51 +13,52 @@ export default function uploadPicture(
   next: NextFunction
 ) {
   upload(req, res, async (err) => {
+    const {
+      file,
+      params,
+      context: { prismaClient, t },
+    } = req;
     if (err) {
       next(err);
     } else {
       try {
-        const {
-          file,
-          params,
-          context: { prismaClient },
-        } = req;
-
         const { id } = params as { id: string };
 
         if (file) {
           const { bucket, key, size, mimetype, originalname } =
             file as unknown as UploadFile;
 
-          const avatar = await prismaClient.$transaction(async (t) => {
-            const oldAvatar = await t.file.findFirst({
-              where: {
-                userAvatarId: id,
-              },
-            });
-
-            if (oldAvatar) {
-              await t.file.delete({
+          const avatar = await prismaClient.$transaction(
+            async (transaction) => {
+              const oldAvatar = await transaction.file.findFirst({
                 where: {
-                  id: oldAvatar.id,
+                  userAvatarId: id,
+                },
+              });
+
+              if (oldAvatar) {
+                await transaction.file.delete({
+                  where: {
+                    id: oldAvatar.id,
+                  },
+                });
+              }
+              return transaction.file.create({
+                data: {
+                  name: originalname,
+                  bucket,
+                  key,
+                  size,
+                  mimetype,
+                  userAvatar: {
+                    connect: {
+                      id,
+                    },
+                  },
                 },
               });
             }
-            return t.file.create({
-              data: {
-                name: originalname,
-                bucket,
-                key,
-                size,
-                mimetype,
-                userAvatar: {
-                  connect: {
-                    id,
-                  },
-                },
-              },
-            });
-          });
+          );
 
           res.status(201).json({
             message: "File uploaded",
@@ -70,11 +71,7 @@ export default function uploadPicture(
       } catch (e) {
         logger.error({ e });
         next(
-          new GraphQLError(req.t(FILE_UPLOAD_ERROR, { ns: "errors" }), {
-            extensions: {
-              code: FILE_UPLOAD_ERROR,
-            },
-          })
+          new QueryError(t(FILE_UPLOAD_ERROR, { ns: "errors" }), e as Error)
         );
       }
     }
