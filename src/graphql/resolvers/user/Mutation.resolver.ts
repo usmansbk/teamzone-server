@@ -2,7 +2,7 @@ import verifyGithubCode from "src/services/github-oauth";
 import verifyGoogleCode from "src/services/google-oauth";
 import { AppContext, SocialProvider, UserPayload } from "src/types";
 import { INVALID_SOCIAL_PROVIDER } from "src/constants/responseCodes";
-import QueryError from "src/utils/errors/QueryError";
+import AuthenticationError from "src/utils/errors/AuthenticationError";
 
 export default {
   Mutation: {
@@ -20,7 +20,7 @@ export default {
       } else if (provider === "GITHUB") {
         payload = await verifyGithubCode(code);
       } else {
-        throw new QueryError(t(INVALID_SOCIAL_PROVIDER));
+        throw new AuthenticationError(t(INVALID_SOCIAL_PROVIDER));
       }
 
       let user = await prismaClient.user.findUnique({
