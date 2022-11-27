@@ -3,7 +3,11 @@ import uploader from "src/rest/utils/uploader";
 import { UploadFile } from "src/types/index";
 import QueryError from "src/utils/errors/QueryError";
 import logger from "src/utils/logger";
-import { FILE_UPLOAD_FAILED } from "src/constants/responseCodes";
+import {
+  FILE_UPLOADED,
+  FILE_UPLOAD_FAILED,
+  NO_FILE_TO_UPLOAD,
+} from "src/constants/responseCodes";
 
 const upload = uploader.single("logo");
 
@@ -65,12 +69,14 @@ export default function uploadLogo(
           );
 
           res.status(201).json({
-            message: "File uploaded",
+            message: t(FILE_UPLOADED),
             id,
             avatar,
           });
         } else {
-          throw new Error("No file");
+          res.status(400).json({
+            message: t(NO_FILE_TO_UPLOAD),
+          });
         }
       } catch (e) {
         logger.error({ message: (e as Error).message });
