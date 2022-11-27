@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
-import { JsonWebTokenError } from "jsonwebtoken";
 import { INVALID_TOKEN_ERROR } from "src/constants/errors";
 import { UserPayload } from "src/types";
+import AuthenticationError from "src/utils/errors/AuthenticationError";
 
 const getUser = async (accessToken: string) => {
   const response = await fetch(`https://api.github.com/user`, {
@@ -43,6 +43,6 @@ export default async function verifyGithubCode(
       emailVerified: true,
     };
   } catch (e) {
-    throw new JsonWebTokenError(INVALID_TOKEN_ERROR);
+    throw new AuthenticationError(INVALID_TOKEN_ERROR, e as Error);
   }
 }

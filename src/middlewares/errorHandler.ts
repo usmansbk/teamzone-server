@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ErrorRequestHandler } from "express";
+import { INTERNAL_SERVER_ERROR } from "src/constants/errors";
+import AuthenticationError from "src/utils/errors/AuthenticationError";
+import ForbiddenError from "src/utils/errors/ForbiddenError";
+import QueryError from "src/utils/errors/QueryError";
 
 const errorHandlerMiddleware: ErrorRequestHandler = (
   error,
@@ -7,8 +11,22 @@ const errorHandlerMiddleware: ErrorRequestHandler = (
   res,
   _next
 ) => {
-  res.status(500).json({
-    message: (error as Error).message,
+  let status: number;
+  let { message } = error as Error;
+
+  if (error instanceof QueryError) {
+    status = 400;
+  } else if (error instanceof AuthenticationError) {
+    status = 401;
+  } else if (error instanceof ForbiddenError) {
+    status = 403;
+  } else {
+    status = 500;
+    message = req.t(INTERNAL_SERVER_ERROR, { ns: "errors" });
+  }
+
+  res.status(status).json({
+    message,
   });
 };
 

@@ -1,7 +1,7 @@
 import { OAuth2Client } from "google-auth-library";
-import { JsonWebTokenError } from "jsonwebtoken";
 import { INVALID_TOKEN_ERROR } from "src/constants/errors";
 import { UserPayload } from "src/types";
+import AuthenticationError from "src/utils/errors/AuthenticationError";
 
 export default async function verifyGoogleCode(
   code: string
@@ -34,6 +34,6 @@ export default async function verifyGoogleCode(
       pictureUrl: payload.picture,
     };
   } catch (e) {
-    throw new JsonWebTokenError(INVALID_TOKEN_ERROR);
+    throw new AuthenticationError(INVALID_TOKEN_ERROR, e as Error);
   }
 }

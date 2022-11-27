@@ -3,7 +3,7 @@ import uploader from "src/rest/utils/uploader";
 import { UploadFile } from "src/types/index";
 import QueryError from "src/utils/errors/QueryError";
 import logger from "src/utils/logger";
-import { FILE_UPLOAD_ERROR } from "src/constants/errors";
+import { FILE_UPLOAD_FAILED } from "src/constants/responseCodes";
 
 const upload = uploader.single("logo");
 
@@ -74,9 +74,7 @@ export default function uploadLogo(
         }
       } catch (e) {
         logger.error({ message: (e as Error).message });
-        next(
-          new QueryError(t(FILE_UPLOAD_ERROR, { ns: "errors" }), e as Error)
-        );
+        next(new QueryError(t(FILE_UPLOAD_FAILED), e as Error));
       }
     }
   });
