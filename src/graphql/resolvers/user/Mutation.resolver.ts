@@ -1,4 +1,4 @@
-import verifyGoogleIdToken from "src/services/google-oauth";
+import verifyGoogleCode from "src/services/google-oauth";
 import { AppContext } from "src/types";
 
 export default {
@@ -10,7 +10,7 @@ export default {
     ) => {
       const { prismaClient, jwt } = context;
 
-      const payload = await verifyGoogleIdToken(code);
+      const payload = await verifyGoogleCode(code);
 
       let user = await prismaClient.user.findUnique({
         where: {

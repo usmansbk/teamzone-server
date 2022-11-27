@@ -2,7 +2,7 @@ import { OAuth2Client } from "google-auth-library";
 import { JsonWebTokenError } from "jsonwebtoken";
 import { INVALID_TOKEN_ERROR } from "src/constants/errors";
 
-export default async function verifyGoogleIdToken(code: string) {
+export default async function verifyGoogleCode(code: string) {
   const client = new OAuth2Client({
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
