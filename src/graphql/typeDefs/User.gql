@@ -8,10 +8,10 @@ type User {
   picture(width: PositiveInt = 100, height: PositiveInt = 100): URL
   countryCode: CountryCode
   timezone: TimeZone
+  clocks: [TimeZone]!
   locale: Locale
   isMe: Boolean!
-  teams: [TeamMember]! @auth(rules: [{ allow: owner, identityClaim: "id" }])
-  createdTeams: [Team]! @auth(rules: [{ allow: owner, identityClaim: "id" }])
+  teams: [Team]! @auth(rules: [{ allow: owner, identityClaim: "id" }])
   createdAt: DateTime!
   updatedAt: DateTime
 }
