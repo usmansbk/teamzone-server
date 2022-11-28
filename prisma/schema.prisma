@@ -20,11 +20,12 @@ model User {
   countryCode   String?
   timezone      String?
   locale        String?
+  clocks        String[]
   avatar        File?
   pictureUrl    String?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  teams         TeamMember[]
+  joinedTeams   TeamMember[]
   createdTeams  Team[]
 }
 

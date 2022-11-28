@@ -11,6 +11,7 @@ CREATE TABLE "User" (
     "countryCode" TEXT,
     "timezone" TEXT,
     "locale" TEXT,
+    "clocks" TEXT[],
     "pictureUrl" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
