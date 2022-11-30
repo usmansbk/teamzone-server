@@ -19,6 +19,15 @@ export default {
               id: currentUser?.id,
             },
           },
+          teammates: {
+            create: {
+              member: {
+                connect: {
+                  id: currentUser?.id,
+                },
+              },
+            },
+          },
         },
       });
     },
@@ -99,7 +108,7 @@ export default {
     ) {
       const { prismaClient, currentUser } = context;
 
-      // check current user is not the owner or member
+      // check current user is not already a member
       const team = await prismaClient.team.findFirstOrThrow({
         where: {
           inviteCode,
@@ -108,11 +117,6 @@ export default {
               member: {
                 id: currentUser!.id,
               },
-            },
-          },
-          owner: {
-            id: {
-              not: currentUser!.id,
             },
           },
           isArchived: {
