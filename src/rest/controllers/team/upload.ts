@@ -8,6 +8,7 @@ import {
   FILE_UPLOAD_FAILED,
   NO_FILE_TO_UPLOAD,
 } from "src/constants/responseCodes";
+import fileUrl from "src/utils/imageFileUrl";
 
 const upload = uploader.single("logo");
 
@@ -32,46 +33,44 @@ export default function uploadLogo(
           const { bucket, key, size, mimetype, originalname } =
             file as unknown as UploadFile;
 
-          const avatar = await prismaClient.$transaction(
-            async (transaction) => {
-              const oldLogo = await transaction.file.findFirst({
+          const logo = await prismaClient.$transaction(async (transaction) => {
+            const oldLogo = await transaction.file.findFirst({
+              where: {
+                teamLogoId: id,
+              },
+            });
+
+            if (oldLogo) {
+              await transaction.file.delete({
                 where: {
-                  teamLogoId: id,
+                  id: oldLogo.id,
                 },
-              });
-
-              if (oldLogo) {
-                await transaction.file.delete({
-                  where: {
-                    id: oldLogo.id,
-                  },
-                  select: {
-                    key: true,
-                  },
-                });
-              }
-
-              return transaction.file.create({
-                data: {
-                  name: originalname,
-                  bucket,
-                  key,
-                  size,
-                  mimetype,
-                  teamLogo: {
-                    connect: {
-                      id,
-                    },
-                  },
+                select: {
+                  key: true,
                 },
               });
             }
-          );
+
+            return transaction.file.create({
+              data: {
+                name: originalname,
+                bucket,
+                key,
+                size,
+                mimetype,
+                teamLogo: {
+                  connect: {
+                    id,
+                  },
+                },
+              },
+            });
+          });
 
           res.status(201).json({
             message: t(FILE_UPLOADED),
             id,
-            avatar,
+            logo: fileUrl(logo, { width: 100, height: 100 }),
           });
         } else {
           res.status(400).json({

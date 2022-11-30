@@ -8,6 +8,7 @@ import {
   FILE_UPLOAD_FAILED,
   NO_FILE_TO_UPLOAD,
 } from "src/constants/responseCodes";
+import fileUrl from "src/utils/imageFileUrl";
 
 const upload = uploader.single("avatar");
 
@@ -64,7 +65,7 @@ export default function uploadPicture(
           res.status(201).json({
             message: t(FILE_UPLOADED),
             id: currentUser?.id,
-            avatar,
+            picture: fileUrl(avatar, { width: 100, height: 100 }),
           });
         } else {
           res.status(400).json({
