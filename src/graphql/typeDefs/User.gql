@@ -8,6 +8,7 @@ type User {
   picture(width: PositiveInt = 100, height: PositiveInt = 100): URL
   countryCode: CountryCode
   timezone: TimeZone
+  tzData: TimezoneData
   locale: Locale
   isMe: Boolean!
   teams: [Team]! @auth(rules: [{ allow: owner, identityClaim: "id" }])
