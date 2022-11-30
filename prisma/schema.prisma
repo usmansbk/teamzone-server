@@ -20,7 +20,6 @@ model User {
   countryCode   String?
   timezone      String?
   locale        String?
-  clocks        String[]
   avatar        File?
   pictureUrl    String?
   createdAt     DateTime     @default(now())

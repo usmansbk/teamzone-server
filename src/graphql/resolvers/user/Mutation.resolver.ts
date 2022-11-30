@@ -8,9 +8,19 @@ export default {
   Mutation: {
     loginWithSocialProvider: async (
       _parent: unknown,
-      { code, provider }: { code: string; provider: SocialProvider },
+      {
+        input,
+      }: {
+        input: {
+          code: string;
+          provider: SocialProvider;
+          timezone: string;
+          locale: string;
+        };
+      },
       context: AppContext
     ) => {
+      const { provider, code, timezone, locale } = input;
       const { prismaClient, jwt, t } = context;
 
       let payload: UserPayload;
@@ -30,23 +40,18 @@ export default {
       });
 
       if (!user) {
-        const {
-          email,
-          firstName,
-          lastName,
-          locale,
-          emailVerified,
-          pictureUrl,
-        } = payload;
+        const { email, firstName, lastName, emailVerified, pictureUrl } =
+          payload;
 
         user = await prismaClient.user.create({
           data: {
             email,
             emailVerified,
-            locale,
+            locale: locale || context.language,
             firstName,
             lastName,
             pictureUrl,
+            timezone,
           },
         });
       }

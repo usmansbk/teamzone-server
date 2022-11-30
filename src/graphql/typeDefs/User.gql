@@ -8,7 +8,6 @@ type User {
   picture(width: PositiveInt = 100, height: PositiveInt = 100): URL
   countryCode: CountryCode
   timezone: TimeZone
-  clocks: [TimeZone]!
   locale: Locale
   isMe: Boolean!
   teams: [Team]! @auth(rules: [{ allow: owner, identityClaim: "id" }])
@@ -29,11 +28,15 @@ enum SocialProvider {
   GITHUB
 }
 
+input SocialLoginInput {
+  code: String!
+  provider: SocialProvider!
+  timezone: TimeZone
+  locale: Locale
+}
+
 type Mutation {
-  loginWithSocialProvider(
-    provider: SocialProvider!
-    code: String!
-  ): AuthPayload!
+  loginWithSocialProvider(input: SocialLoginInput!): AuthPayload!
   updateCurrentUserFullName(
     firstName: NonEmptyString!
     lastName: NonEmptyString!
