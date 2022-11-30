@@ -19,6 +19,11 @@ type Query {
   me: User! @auth
 }
 
+type Mutation {
+  loginWithSocialProvider(input: SocialLoginInput!): AuthPayload!
+  updateProfile(input: UpdateUserProfileInput!): User! @auth
+}
+
 type AuthPayload {
   token: JWT
 }
@@ -35,13 +40,9 @@ input SocialLoginInput {
   locale: Locale
 }
 
-type Mutation {
-  loginWithSocialProvider(input: SocialLoginInput!): AuthPayload!
-  updateCurrentUserFullName(
-    firstName: NonEmptyString!
-    lastName: NonEmptyString!
-  ): User! @auth
-  updateCurrentUserTimeZone(timezone: TimeZone!): User! @auth
-  updateCurrentUserCountry(countryCode: CountryCode!): User! @auth
-  updateCurrentUserLocale(locale: Locale!): User! @auth
+input UpdateUserProfileInput {
+  firstName: NonEmptyString!
+  lastName: NonEmptyString!
+  timezone: TimeZone!
+  locale: Locale!
 }

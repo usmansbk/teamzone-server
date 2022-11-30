@@ -23,3 +23,10 @@ export interface UserPayload {
   locale?: string;
   emailVerified: boolean;
 }
+
+export interface UpdateProfileInput {
+  firstName: string;
+  lastName: string;
+  locale: string;
+  timezone: string;
+}

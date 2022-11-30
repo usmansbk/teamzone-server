@@ -1,6 +1,11 @@
 import verifyGithubCode from "src/services/github-oauth";
 import verifyGoogleCode from "src/services/google-oauth";
-import { AppContext, SocialProvider, UserPayload } from "src/types";
+import {
+  AppContext,
+  SocialProvider,
+  UpdateProfileInput,
+  UserPayload,
+} from "src/types";
 import { INVALID_SOCIAL_PROVIDER } from "src/constants/responseCodes";
 import AuthenticationError from "src/utils/errors/AuthenticationError";
 
@@ -60,65 +65,18 @@ export default {
         token: jwt.sign({ id: user.id }),
       };
     },
-    updateCurrentUserFullName(
+    updateProfile: (
       parent: unknown,
-      { firstName, lastName }: { firstName: string; lastName: string },
+      { input }: { input: UpdateProfileInput },
       context: AppContext
-    ) {
+    ) => {
       const { prismaClient, currentUser } = context;
+
       return prismaClient.user.update({
         where: {
-          id: currentUser!.id,
+          id: currentUser?.id,
         },
-        data: {
-          firstName,
-          lastName,
-        },
-      });
-    },
-    updateCurrentUserTimeZone(
-      parent: unknown,
-      { timezone }: { timezone: string },
-      context: AppContext
-    ) {
-      const { prismaClient, currentUser } = context;
-      return prismaClient.user.update({
-        where: {
-          id: currentUser!.id,
-        },
-        data: {
-          timezone,
-        },
-      });
-    },
-    updateCurrentUserCountry(
-      parent: unknown,
-      { countryCode }: { countryCode: string },
-      context: AppContext
-    ) {
-      const { prismaClient, currentUser } = context;
-      return prismaClient.user.update({
-        where: {
-          id: currentUser!.id,
-        },
-        data: {
-          countryCode,
-        },
-      });
-    },
-    updateCurrentUserLocale(
-      parent: unknown,
-      { locale }: { locale: string },
-      context: AppContext
-    ) {
-      const { prismaClient, currentUser } = context;
-      return prismaClient.user.update({
-        where: {
-          id: currentUser!.id,
-        },
-        data: {
-          locale,
-        },
+        data: input,
       });
     },
   },
