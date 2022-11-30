@@ -70,7 +70,7 @@ export default function uploadLogo(
           res.status(201).json({
             message: t(FILE_UPLOADED),
             id,
-            logo: fileUrl(logo, { width: 100, height: 100 }),
+            logo: fileUrl(logo, { width: 400, height: 400 }),
           });
         } else {
           res.status(400).json({

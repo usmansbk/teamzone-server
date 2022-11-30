@@ -65,7 +65,7 @@ export default function uploadPicture(
           res.status(201).json({
             message: t(FILE_UPLOADED),
             id: currentUser?.id,
-            picture: fileUrl(avatar, { width: 100, height: 100 }),
+            picture: fileUrl(avatar, { width: 400, height: 400 }),
           });
         } else {
           res.status(400).json({
