@@ -19,15 +19,12 @@ export default function uploadPicture(
   upload(req, res, async (err) => {
     const {
       file,
-      params,
-      context: { prismaClient, t },
+      context: { prismaClient, t, currentUser },
     } = req;
     if (err) {
       next(err);
     } else {
       try {
-        const { id } = params as { id: string };
-
         if (file) {
           const { bucket, key, size, mimetype, originalname } =
             file as unknown as UploadFile;
@@ -36,7 +33,7 @@ export default function uploadPicture(
             async (transaction) => {
               const oldAvatar = await transaction.file.findFirst({
                 where: {
-                  userAvatarId: id,
+                  userAvatarId: currentUser?.id,
                 },
               });
 
@@ -56,7 +53,7 @@ export default function uploadPicture(
                   mimetype,
                   userAvatar: {
                     connect: {
-                      id,
+                      id: currentUser?.id,
                     },
                   },
                 },
@@ -66,7 +63,7 @@ export default function uploadPicture(
 
           res.status(201).json({
             message: t(FILE_UPLOADED),
-            id,
+            id: currentUser?.id,
             avatar,
           });
         } else {
