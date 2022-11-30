@@ -1,0 +1,19 @@
+type TimezoneData {
+  name: TimeZone!
+  alternativeName: String
+  group: [TimeZone]
+  continentCode: String!
+  continentName: String!
+  countryName: String!
+  countryCode: CountryCode
+  mainCities: [String]
+  rawOffsetInMinutes: Int!
+  abbreviation: String!
+  rawFormat: String!
+  currentTimeOffsetInMinutes: Int!
+  currentTimeFormat: String!
+}
+
+type Query {
+  timezones: [TimezoneData!]! @auth
+}
