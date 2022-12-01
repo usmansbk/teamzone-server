@@ -26,6 +26,7 @@ export default {
                   id: currentUser?.id,
                 },
               },
+              role: "ADMIN",
             },
           },
         },
