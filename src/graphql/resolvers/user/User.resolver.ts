@@ -31,6 +31,21 @@ export default {
         },
       });
     },
+    createdTeams(
+      user: User,
+      args: never,
+      context: AppContext
+    ): Promise<Team[] | null> {
+      const { prismaClient } = context;
+
+      return prismaClient.user
+        .findUnique({
+          where: {
+            id: user.id,
+          },
+        })
+        .createdTeams();
+    },
     isMe(user: User, args: never, context: AppContext): boolean {
       return user.id === context.currentUser!.id;
     },

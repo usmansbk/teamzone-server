@@ -12,6 +12,7 @@ type User {
   locale: Locale
   isMe: Boolean!
   teams: [Team]! @auth(rules: [{ allow: owner, identityClaim: "id" }])
+  createdTeams: [Team]! @auth(rules: [{ allow: owner, identityClaim: "id" }])
   createdAt: DateTime!
   updatedAt: DateTime
 }
