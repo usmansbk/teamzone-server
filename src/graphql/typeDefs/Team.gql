@@ -18,7 +18,9 @@ enum TeamRole {
 type TeamMember {
   id: ID!
   team: Team!
+  teamId: ID!
   member: User!
+  memberId: ID!
   joinedAt: DateTime!
   role: TeamRole
   isMe: Boolean

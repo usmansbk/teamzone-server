@@ -23,18 +23,11 @@ export default {
 
       return prismaClient.team.findMany({
         where: {
-          OR: [
-            {
-              ownerId: user.id,
+          teammates: {
+            some: {
+              memberId: user.id,
             },
-            {
-              teammates: {
-                some: {
-                  memberId: user.id,
-                },
-              },
-            },
-          ],
+          },
         },
       });
     },
