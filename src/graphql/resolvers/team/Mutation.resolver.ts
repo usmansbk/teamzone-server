@@ -108,20 +108,9 @@ export default {
     ) {
       const { prismaClient, currentUser } = context;
 
-      // check current user is not already a member
       const team = await prismaClient.team.findFirstOrThrow({
         where: {
           inviteCode,
-          teammates: {
-            none: {
-              member: {
-                id: currentUser!.id,
-              },
-            },
-          },
-          isArchived: {
-            not: true,
-          },
         },
       });
 

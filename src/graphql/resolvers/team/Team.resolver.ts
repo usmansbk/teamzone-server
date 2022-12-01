@@ -46,5 +46,24 @@ export default {
 
       return logo && fileUrl(logo, args);
     },
+    async isMember(team: Team, args: never, context: AppContext) {
+      const { prismaClient, currentUser } = context;
+
+      const member = await prismaClient.team
+        .findUnique({
+          where: {
+            id: team.id,
+          },
+        })
+        .teammates({
+          where: {
+            member: {
+              id: currentUser?.id,
+            },
+          },
+        });
+
+      return !!member?.length;
+    },
   },
 };
