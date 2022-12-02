@@ -112,19 +112,30 @@ export default {
       const team = await prismaClient.team.findFirstOrThrow({
         where: {
           inviteCode,
+          teammates: {
+            some: {
+              member: {
+                id: {
+                  not: currentUser!.id,
+                },
+              },
+            },
+          },
         },
       });
 
-      return prismaClient.teamMember.create({
+      return prismaClient.team.update({
+        where: {
+          id: team.id,
+        },
         data: {
-          team: {
-            connect: {
-              id: team.id,
-            },
-          },
-          member: {
-            connect: {
-              id: currentUser!.id,
+          teammates: {
+            create: {
+              member: {
+                connect: {
+                  id: currentUser!.id,
+                },
+              },
             },
           },
         },
