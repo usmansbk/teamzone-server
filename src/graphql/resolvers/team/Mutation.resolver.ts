@@ -288,6 +288,11 @@ export default {
         where: {
           id: memberId,
           team: {
+            owner: {
+              id: {
+                not: memberId,
+              },
+            },
             OR: [
               {
                 ownerId: currentUser!.id,
