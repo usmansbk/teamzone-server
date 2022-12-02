@@ -18,12 +18,18 @@ export default {
           },
         })
         .teammates({
-          orderBy: {
-            member: {
-              firstName: "asc",
-              lastName: "asc",
+          orderBy: [
+            {
+              member: {
+                firstName: "asc",
+              },
             },
-          },
+            {
+              member: {
+                lastName: "asc",
+              },
+            },
+          ],
         });
     },
     owner(team: Team, args: never, context: AppContext): Promise<User | null> {
