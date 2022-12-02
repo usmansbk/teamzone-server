@@ -62,6 +62,9 @@ CREATE TABLE "File" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "TeamMember_teamId_memberId_key" ON "TeamMember"("teamId", "memberId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "File_userAvatarId_key" ON "File"("userAvatarId");
 
 -- CreateIndex

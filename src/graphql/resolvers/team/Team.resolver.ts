@@ -17,7 +17,14 @@ export default {
             id: team.id,
           },
         })
-        .teammates();
+        .teammates({
+          orderBy: {
+            member: {
+              firstName: "asc",
+              lastName: "asc",
+            },
+          },
+        });
     },
     owner(team: Team, args: never, context: AppContext): Promise<User | null> {
       const { prismaClient } = context;

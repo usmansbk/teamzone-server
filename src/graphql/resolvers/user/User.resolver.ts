@@ -29,6 +29,9 @@ export default {
             },
           },
         },
+        orderBy: {
+          name: "asc",
+        },
       });
     },
     createdTeams(

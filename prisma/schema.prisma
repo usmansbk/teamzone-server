@@ -41,6 +41,8 @@ model TeamMember {
   memberId String
   joinedAt DateTime @default(now())
   role     TeamRole @default(TEAMMATE)
+
+  @@unique([teamId, memberId])
 }
 
 model Team {
