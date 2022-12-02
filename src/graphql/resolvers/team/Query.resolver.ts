@@ -1,5 +1,7 @@
 import { Team } from "@prisma/client";
+import { TEAM_NOT_FOUND } from "src/constants/responseCodes";
 import { AppContext } from "src/types";
+import QueryError from "src/utils/errors/QueryError";
 
 export default {
   Query: {
@@ -8,9 +10,9 @@ export default {
       { id }: { id: string },
       context: AppContext
     ): Promise<Team> {
-      const { prismaClient, currentUser } = context;
+      const { prismaClient, currentUser, t } = context;
 
-      return prismaClient.team.findFirstOrThrow({
+      const team = await prismaClient.team.findFirst({
         where: {
           id,
           OR: [
@@ -29,6 +31,12 @@ export default {
           ],
         },
       });
+
+      if (!team) {
+        throw new QueryError(t(TEAM_NOT_FOUND));
+      }
+
+      return team;
     },
   },
 };

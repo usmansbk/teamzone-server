@@ -1,5 +1,15 @@
 import { nanoid } from "nanoid";
+import {
+  FAILED_TO_DELETE_TEAM,
+  FAILED_TO_MAKE_ADMIN,
+  FAILED_TO_REMOVE_ADMIN,
+  FAILED_TO_REMOVE_MEMBER,
+  FAILED_TO_UPDATE_TEAM,
+  INVALID_INVITE_CODE,
+  NOT_A_TEAM_MEMBER,
+} from "src/constants/responseCodes";
 import type { AppContext, CreateTeamInput, UpdateTeamInput } from "src/types";
+import QueryError from "src/utils/errors/QueryError";
 
 export default {
   Mutation: {
@@ -37,11 +47,11 @@ export default {
       { input }: { input: UpdateTeamInput },
       context: AppContext
     ) {
-      const { prismaClient, currentUser } = context;
+      const { prismaClient, currentUser, t } = context;
       const { id, name } = input;
 
       // check current user has permission
-      await prismaClient.team.findFirstOrThrow({
+      const team = await prismaClient.team.findFirst({
         where: {
           id,
           OR: [
@@ -59,6 +69,10 @@ export default {
           ],
         },
       });
+
+      if (!team) {
+        throw new QueryError(t(FAILED_TO_UPDATE_TEAM));
+      }
 
       return prismaClient.team.update({
         data: {
@@ -74,10 +88,10 @@ export default {
       { teamId }: { teamId: string },
       context: AppContext
     ) {
-      const { prismaClient, currentUser } = context;
+      const { prismaClient, currentUser, t } = context;
 
       // check current user has permission
-      await prismaClient.team.findFirstOrThrow({
+      const team = await prismaClient.team.findFirst({
         where: {
           id: teamId,
           OR: [
@@ -96,6 +110,10 @@ export default {
         },
       });
 
+      if (!team) {
+        throw new QueryError(t(FAILED_TO_DELETE_TEAM));
+      }
+
       return prismaClient.team.delete({
         where: {
           id: teamId,
@@ -107,9 +125,9 @@ export default {
       { inviteCode }: { inviteCode: string },
       context: AppContext
     ) {
-      const { prismaClient, currentUser } = context;
+      const { prismaClient, currentUser, t } = context;
 
-      const team = await prismaClient.team.findFirstOrThrow({
+      const team = await prismaClient.team.findFirst({
         where: {
           inviteCode,
           teammates: {
@@ -123,6 +141,10 @@ export default {
           },
         },
       });
+
+      if (!team) {
+        throw new QueryError(t(INVALID_INVITE_CODE));
+      }
 
       return prismaClient.team.update({
         where: {
@@ -146,9 +168,9 @@ export default {
       { teamId }: { teamId: string },
       context: AppContext
     ) {
-      const { prismaClient, currentUser } = context;
+      const { prismaClient, currentUser, t } = context;
 
-      const teamMember = await prismaClient.teamMember.findFirstOrThrow({
+      const teamMember = await prismaClient.teamMember.findFirst({
         where: {
           member: {
             id: currentUser!.id,
@@ -158,6 +180,10 @@ export default {
           },
         },
       });
+
+      if (!teamMember) {
+        throw new QueryError(t(NOT_A_TEAM_MEMBER));
+      }
 
       return prismaClient.teamMember.delete({
         where: {
@@ -170,10 +196,10 @@ export default {
       { memberId }: { memberId: string },
       context: AppContext
     ) {
-      const { prismaClient, currentUser } = context;
+      const { prismaClient, currentUser, t } = context;
 
       // check current user has permission
-      const member = await prismaClient.teamMember.findFirstOrThrow({
+      const member = await prismaClient.teamMember.findFirst({
         where: {
           id: memberId,
           team: {
@@ -198,81 +224,13 @@ export default {
         },
       });
 
+      if (!member) {
+        throw new QueryError(t(FAILED_TO_REMOVE_MEMBER));
+      }
+
       return prismaClient.teamMember.delete({
         where: {
           id: member.id,
-        },
-      });
-    },
-    async archiveTeam(
-      parent: unknown,
-      { teamId }: { teamId: string },
-      context: AppContext
-    ) {
-      const { prismaClient, currentUser } = context;
-
-      // check current user has permission
-      await prismaClient.team.findFirstOrThrow({
-        where: {
-          id: teamId,
-          OR: [
-            {
-              ownerId: currentUser!.id,
-            },
-            {
-              teammates: {
-                some: {
-                  memberId: currentUser!.id,
-                  role: "ADMIN",
-                },
-              },
-            },
-          ],
-        },
-      });
-
-      return prismaClient.team.update({
-        where: {
-          id: teamId,
-        },
-        data: {
-          isArchived: true,
-        },
-      });
-    },
-    async unarchiveTeam(
-      parent: unknown,
-      { teamId }: { teamId: string },
-      context: AppContext
-    ) {
-      const { prismaClient, currentUser } = context;
-
-      // check current user has permission
-      await prismaClient.team.findFirstOrThrow({
-        where: {
-          id: teamId,
-          OR: [
-            {
-              ownerId: currentUser!.id,
-            },
-            {
-              teammates: {
-                some: {
-                  memberId: currentUser!.id,
-                  role: "ADMIN",
-                },
-              },
-            },
-          ],
-        },
-      });
-
-      return prismaClient.team.update({
-        where: {
-          id: teamId,
-        },
-        data: {
-          isArchived: false,
         },
       });
     },
@@ -281,10 +239,10 @@ export default {
       { memberId }: { memberId: string },
       context: AppContext
     ) {
-      const { prismaClient, currentUser } = context;
+      const { prismaClient, currentUser, t } = context;
 
       // check current user has permission
-      const member = await prismaClient.teamMember.findFirstOrThrow({
+      const member = await prismaClient.teamMember.findFirst({
         where: {
           id: memberId,
           team: {
@@ -304,6 +262,10 @@ export default {
           },
         },
       });
+
+      if (!member) {
+        throw new QueryError(t(FAILED_TO_MAKE_ADMIN));
+      }
 
       return prismaClient.teamMember.update({
         where: {
@@ -319,10 +281,10 @@ export default {
       { memberId }: { memberId: string },
       context: AppContext
     ) {
-      const { prismaClient, currentUser } = context;
+      const { prismaClient, currentUser, t } = context;
 
       // check current user has permission
-      const member = await prismaClient.teamMember.findFirstOrThrow({
+      const member = await prismaClient.teamMember.findFirst({
         where: {
           id: memberId,
           team: {
@@ -342,6 +304,10 @@ export default {
           },
         },
       });
+
+      if (!member) {
+        throw new QueryError(t(FAILED_TO_REMOVE_ADMIN));
+      }
 
       return prismaClient.teamMember.update({
         where: {
