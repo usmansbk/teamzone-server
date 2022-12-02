@@ -154,52 +154,42 @@ export default {
         },
       });
     },
-    async removeTeammates(
+    async removeTeammate(
       parent: unknown,
-      { memberIds, teamId }: { teamId: string; memberIds: string[] },
+      { memberId }: { memberId: string },
       context: AppContext
     ) {
       const { prismaClient, currentUser } = context;
 
       // check current user has permission
-      await prismaClient.team.findFirstOrThrow({
+      const member = await prismaClient.teamMember.findFirstOrThrow({
         where: {
-          id: teamId,
-          OR: [
-            {
-              ownerId: currentUser!.id,
-            },
-            {
-              teammates: {
-                some: {
-                  memberId: currentUser!.id,
-                  role: "ADMIN",
+          id: memberId,
+          team: {
+            OR: [
+              {
+                owner: {
+                  id: currentUser?.id,
                 },
               },
-            },
-          ],
+              {
+                teammates: {
+                  some: {
+                    member: {
+                      id: currentUser?.id,
+                    },
+                    role: "ADMIN",
+                  },
+                },
+              },
+            ],
+          },
         },
       });
 
-      return prismaClient.teamMember.deleteMany({
+      return prismaClient.teamMember.delete({
         where: {
-          team: {
-            id: teamId,
-          },
-          AND: [
-            {
-              id: {
-                in: memberIds,
-              },
-            },
-            {
-              member: {
-                id: {
-                  not: currentUser!.id,
-                },
-              },
-            },
-          ],
+          id: member.id,
         },
       });
     },
@@ -277,34 +267,36 @@ export default {
     },
     async addTeamMemberToAdmin(
       parent: unknown,
-      { teamId, memberId }: { teamId: string; memberId: string },
+      { memberId }: { memberId: string },
       context: AppContext
     ) {
       const { prismaClient, currentUser } = context;
 
       // check current user has permission
-      await prismaClient.team.findFirstOrThrow({
+      const member = await prismaClient.teamMember.findFirstOrThrow({
         where: {
-          id: teamId,
-          OR: [
-            {
-              ownerId: currentUser!.id,
-            },
-            {
-              teammates: {
-                some: {
-                  memberId: currentUser!.id,
-                  role: "ADMIN",
+          id: memberId,
+          team: {
+            OR: [
+              {
+                ownerId: currentUser!.id,
+              },
+              {
+                teammates: {
+                  some: {
+                    memberId: currentUser!.id,
+                    role: "ADMIN",
+                  },
                 },
               },
-            },
-          ],
+            ],
+          },
         },
       });
 
       return prismaClient.teamMember.update({
         where: {
-          id: memberId,
+          id: member.id,
         },
         data: {
           role: "ADMIN",
@@ -313,34 +305,36 @@ export default {
     },
     async removeTeamMemberFromAdmin(
       parent: unknown,
-      { teamId, memberId }: { teamId: string; memberId: string },
+      { memberId }: { memberId: string },
       context: AppContext
     ) {
       const { prismaClient, currentUser } = context;
 
       // check current user has permission
-      await prismaClient.team.findFirstOrThrow({
+      const member = await prismaClient.teamMember.findFirstOrThrow({
         where: {
-          id: teamId,
-          OR: [
-            {
-              ownerId: currentUser!.id,
-            },
-            {
-              teammates: {
-                some: {
-                  memberId: currentUser!.id,
-                  role: "ADMIN",
+          id: memberId,
+          team: {
+            OR: [
+              {
+                ownerId: currentUser!.id,
+              },
+              {
+                teammates: {
+                  some: {
+                    memberId: currentUser!.id,
+                    role: "ADMIN",
+                  },
                 },
               },
-            },
-          ],
+            ],
+          },
         },
       });
 
       return prismaClient.teamMember.update({
         where: {
-          id: memberId,
+          id: member.id,
         },
         data: {
           role: "TEAMMATE",

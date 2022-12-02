@@ -39,9 +39,9 @@ type Mutation {
   unarchiveTeam(teamId: ID!): Team! @auth
   joinTeam(inviteCode: ID!): TeamMember! @auth
   leaveTeam(teamId: ID!): TeamMember! @auth
-  removeTeammates(memberIds: [ID!]!, teamId: ID!): [TeamMember!]! @auth
-  addTeamMemberToAdmin(memberId: ID!, teamId: ID!): TeamMember! @auth
-  removeTeamMemberFromAdmin(memberId: ID!, teamId: ID!): TeamMember! @auth
+  removeTeammate(memberId: ID!): TeamMember! @auth
+  addTeamMemberToAdmin(memberId: ID!): TeamMember! @auth
+  removeTeamMemberFromAdmin(memberId: ID!): TeamMember! @auth
 }
 
 input CreateTeamInput {
