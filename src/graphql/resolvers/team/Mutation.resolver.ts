@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 import {
   FAILED_TO_DELETE_TEAM,
+  FAILED_TO_JOIN_TEAM,
   FAILED_TO_MAKE_ADMIN,
   FAILED_TO_REMOVE_ADMIN,
   FAILED_TO_REMOVE_MEMBER,
@@ -146,22 +147,28 @@ export default {
         throw new QueryError(t(INVALID_INVITE_CODE));
       }
 
-      return prismaClient.team.update({
-        where: {
-          id: team.id,
-        },
-        data: {
-          teammates: {
-            create: {
-              member: {
-                connect: {
-                  id: currentUser!.id,
+      try {
+        const joinedTeam = await prismaClient.team.update({
+          where: {
+            id: team.id,
+          },
+          data: {
+            teammates: {
+              create: {
+                member: {
+                  connect: {
+                    id: currentUser!.id,
+                  },
                 },
               },
             },
           },
-        },
-      });
+        });
+
+        return joinedTeam;
+      } catch (e) {
+        throw new QueryError(t(FAILED_TO_JOIN_TEAM));
+      }
     },
     async leaveTeam(
       parent: unknown,
