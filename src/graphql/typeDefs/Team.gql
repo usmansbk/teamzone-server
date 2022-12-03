@@ -7,6 +7,7 @@ type Team {
   owner: User!
   isOwner: Boolean!
   isMember: Boolean!
+  isAdmin: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime
 }

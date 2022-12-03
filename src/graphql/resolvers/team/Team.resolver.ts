@@ -62,7 +62,7 @@ export default {
     async isMember(team: Team, args: never, context: AppContext) {
       const { prismaClient, currentUser } = context;
 
-      const member = await prismaClient.team
+      const teammates = await prismaClient.team
         .findUnique({
           where: {
             id: team.id,
@@ -76,7 +76,27 @@ export default {
           },
         });
 
-      return !!member?.length;
+      return !!teammates?.length;
+    },
+    async isAdmin(team: Team, args: never, context: AppContext) {
+      const { prismaClient, currentUser } = context;
+
+      const teammates = await prismaClient.team
+        .findUnique({
+          where: {
+            id: team.id,
+          },
+        })
+        .teammates({
+          where: {
+            role: "ADMIN",
+            member: {
+              id: currentUser?.id,
+            },
+          },
+        });
+
+      return !!teammates?.length;
     },
   },
 };
