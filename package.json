@@ -25,7 +25,7 @@
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
     "babel-plugin-tsconfig-paths-module-resolver": "^1.0.3",
-    "eslint": "^8.28.0",
+    "eslint": "^8.29.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",
@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "@apollo/server": "^4.2.2",
-    "@aws-sdk/client-s3": "^3.222.0",
+    "@aws-sdk/client-s3": "^3.223.0",
     "@graphql-tools/load-files": "^6.6.1",
     "@graphql-tools/merge": "^8.3.12",
     "@graphql-tools/schema": "^9.0.10",
