@@ -2972,12 +2972,12 @@
     "@graphql-tools/utils" "9.1.0"
     tslib "^2.4.0"
 
-"@graphql-tools/merge@8.3.12", "@graphql-tools/merge@^8.3.12":
-  version "8.3.12"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/merge/-/merge-8.3.12.tgz#e3f2e5d8a7b34fb689cda66799d845cbc919e464"
-  integrity sha512-BFL8r4+FrqecPnIW0H8UJCBRQ4Y8Ep60aujw9c/sQuFmQTiqgWgpphswMGfaosP2zUinDE3ojU5wwcS2IJnumA==
+"@graphql-tools/merge@8.3.13", "@graphql-tools/merge@^8.3.13":
+  version "8.3.13"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/merge/-/merge-8.3.13.tgz#1b02259b149be7e3265c0a1a2c24c0b5a35c6d5c"
+  integrity sha512-dALIXlfL2JNNqZ1c/87FLd87+Q/I/UoiSy43dWxoWpgOQ8KykWe4qwRbfyVyM2ELxTi2Ne7KvgLQWQKXyb8yiA==
   dependencies:
-    "@graphql-tools/utils" "9.1.1"
+    "@graphql-tools/utils" "9.1.2"
     tslib "^2.4.0"
 
 "@graphql-tools/schema@^9.0.0":
@@ -2990,13 +2990,13 @@
     tslib "^2.4.0"
     value-or-promise "1.0.11"
 
-"@graphql-tools/schema@^9.0.10":
-  version "9.0.10"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/schema/-/schema-9.0.10.tgz#77ba3dfab241f0232dc0d3ba03201663b63714e2"
-  integrity sha512-lV0o4df9SpPiaeeDAzgdCJ2o2N9Wvsp0SMHlF2qDbh9aFCFQRsXuksgiDm2yTgT3TG5OtUes/t0D6uPjPZFUbQ==
+"@graphql-tools/schema@^9.0.11":
+  version "9.0.11"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/schema/-/schema-9.0.11.tgz#951baadc452e4c413fdcbf322764e6beb07d55d4"
+  integrity sha512-/GwUXkltymriaCjA0HcSimBvSKqUrnM06fZCFEtmJI4UAiItOCIIPoxdL9rVUdDhS/IrU8KbJdUj9krn3Gp6dQ==
   dependencies:
-    "@graphql-tools/merge" "8.3.12"
-    "@graphql-tools/utils" "9.1.1"
+    "@graphql-tools/merge" "8.3.13"
+    "@graphql-tools/utils" "9.1.2"
     tslib "^2.4.0"
     value-or-promise "1.0.11"
 
@@ -3007,10 +3007,10 @@
   dependencies:
     tslib "^2.4.0"
 
-"@graphql-tools/utils@9.1.1", "@graphql-tools/utils@^9.1.1":
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-9.1.1.tgz#b47ea8f0d18c038c5c1c429e72caa5c25039fbab"
-  integrity sha512-DXKLIEDbihK24fktR2hwp/BNIVwULIHaSTNTNhXS+19vgT50eX9wndx1bPxGwHnVBOONcwjXy0roQac49vdt/w==
+"@graphql-tools/utils@9.1.2", "@graphql-tools/utils@^9.1.2":
+  version "9.1.2"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-9.1.2.tgz#f674936e59a242076979362901db621fb906ca33"
+  integrity sha512-LdWQ8kt6iMe0SAI6D7Ed2XhYs/2hqce6PHZiwdsLYxUv+Rph6P/Vxs8eThAw0kdKjZkuNRluRquLqEqQbFyihQ==
   dependencies:
     tslib "^2.4.0"
 
@@ -3405,49 +3405,49 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
-"@sentry/core@7.24.0":
-  version "7.24.0"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.24.0.tgz#e856a071c702279854d6e5221957d61cd48036cc"
-  integrity sha512-QVRtmnaWEI0/MHIfBozgsMfh+7WU6OfpvUd72x1Dpk3Zk6Zs7Hqq0YfxfeBd7ApjNjGogPl1beaHcHAHlr3IyA==
+"@sentry/core@7.24.1":
+  version "7.24.1"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.24.1.tgz#815480791e4230fd2e8718a4caa1b8253ca42c23"
+  integrity sha512-x/kBpBVFCZn4ijVVAPAw0cmHy0PfXgBpYGQ1X3+EEzI3pkvlygvnF2pLR/4LrsC23zGfIRlbDj4DwK5hxoFF4g==
   dependencies:
-    "@sentry/types" "7.24.0"
-    "@sentry/utils" "7.24.0"
+    "@sentry/types" "7.24.1"
+    "@sentry/utils" "7.24.1"
     tslib "^1.9.3"
 
-"@sentry/node@^7.24.0":
-  version "7.24.0"
-  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-7.24.0.tgz#1305b34189c31557b7cf5232d7d14decba270b67"
-  integrity sha512-llgMDBywfCegjttFJX2Y/V49hRQvq+xv3jbSfhKYeCHYfexhHKXQNZF5uY9MS4CUzAXexfoKZMu2GD6AUj0TxA==
+"@sentry/node@^7.24.1":
+  version "7.24.1"
+  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-7.24.1.tgz#709376a72f6d10ad5c22dc2bb446b1ca9d51a949"
+  integrity sha512-sCZEqG+9SGn7vq9QHrhjU9SB3U/7FHAonCFG9oQth8zNT4SpOKKjEkbQC45sHqZ00dnERRuQMoEznOHqF46uIA==
   dependencies:
-    "@sentry/core" "7.24.0"
-    "@sentry/types" "7.24.0"
-    "@sentry/utils" "7.24.0"
+    "@sentry/core" "7.24.1"
+    "@sentry/types" "7.24.1"
+    "@sentry/utils" "7.24.1"
     cookie "^0.4.1"
     https-proxy-agent "^5.0.0"
     lru_map "^0.3.3"
     tslib "^1.9.3"
 
-"@sentry/tracing@^7.24.0":
-  version "7.24.0"
-  resolved "https://registry.yarnpkg.com/@sentry/tracing/-/tracing-7.24.0.tgz#d9477a2da9c902ca9663cd4cd87ba279f73f212c"
-  integrity sha512-O/4hE/lYM6+hM4K5O06pWNuHzZb2ex5f2497bxkwxq17wpJhVp1oDuz8hbWNL7BUNeIbeDpqunBHQzzmVRbL1Q==
+"@sentry/tracing@^7.24.1":
+  version "7.24.1"
+  resolved "https://registry.yarnpkg.com/@sentry/tracing/-/tracing-7.24.1.tgz#8f947b01a6b836334f20fcb36441d69cede474c9"
+  integrity sha512-Vp03aH7wMxLszFMZqVWPlDlqCP5mwAqqsh9nHWUJhyarGJjeacrMj+B+5qKKM4W/JNnbrHRTRLw2lL/szxj1KA==
   dependencies:
-    "@sentry/core" "7.24.0"
-    "@sentry/types" "7.24.0"
-    "@sentry/utils" "7.24.0"
+    "@sentry/core" "7.24.1"
+    "@sentry/types" "7.24.1"
+    "@sentry/utils" "7.24.1"
     tslib "^1.9.3"
 
-"@sentry/types@7.24.0":
-  version "7.24.0"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.24.0.tgz#1acc841efe7bd56fc3eb647a613dba92631e8413"
-  integrity sha512-Xs4r9esBPieJUA6cGmMqfSQiinILdlhScjM+NqDSzxOo8+LRCJzckTLhUttBGVlaAoa4hjCEsfkHA1tVV1DycA==
+"@sentry/types@7.24.1":
+  version "7.24.1"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.24.1.tgz#ff2e39752ff1d46b54807275e9262209f95ec429"
+  integrity sha512-77E1cgw31YmEeqTi5RNMfIgwDB164UdtAGKtTtCehbF9HffO3Lp4f3G8TumqNKOik1RDNHrn+ZWqbj2c97UZZA==
 
-"@sentry/utils@7.24.0":
-  version "7.24.0"
-  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.24.0.tgz#73f100dc8942e73353473eaf3168e5052e2f45be"
-  integrity sha512-baaRDhHWHTyhmR6V8YKSo0NvN+D17pIKRDmb2vpWHVpTjobKCivNBLRoy3VhnIMS/24XyZnL028QLwkUNLg1Ug==
+"@sentry/utils@7.24.1":
+  version "7.24.1"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.24.1.tgz#f9760a7cb4b33d2ead01aace7b0fd62c8c2c6be8"
+  integrity sha512-wH0+ToU3OpL373Nx0YiuYje82a8lf6fm7q+MqyWyC6sVETe4YiL4+Ge0WLEJ0XEGFjxfL4gSZL3FhoVbJQxUtA==
   dependencies:
-    "@sentry/types" "7.24.0"
+    "@sentry/types" "7.24.1"
     tslib "^1.9.3"
 
 "@sinclair/typebox@^0.24.1":
@@ -3854,10 +3854,10 @@
     "@typescript-eslint/types" "5.45.1"
     eslint-visitor-keys "^3.3.0"
 
-"@vvo/tzdb@^6.78.0":
-  version "6.78.0"
-  resolved "https://registry.yarnpkg.com/@vvo/tzdb/-/tzdb-6.78.0.tgz#67ed4a6cf8da510dcc975c24e6c3a3122a3eb070"
-  integrity sha512-cphuafLj6X3dIkJqbcXQMpCtMjllHU3lkJhBKu3YuBXoezzR3IendDgc85b+LV2AA1slkEX5yTrF8Hxh8UX6KQ==
+"@vvo/tzdb@^6.79.0":
+  version "6.79.0"
+  resolved "https://registry.yarnpkg.com/@vvo/tzdb/-/tzdb-6.79.0.tgz#f0c3b7053dccf06343a7294d6f0a1917c2a11377"
+  integrity sha512-mwRVaRfmZGPhog/zleBwLVw2ylT6fIYeKDty+b46ZpZ4evdnfyCh8s9S8V7DJl+ybS9KDByIeM5QUNu0M6cJuA==
 
 abbrev@1:
   version "1.1.1"
@@ -5560,10 +5560,10 @@ i18next-http-middleware@^3.2.1:
   resolved "https://registry.yarnpkg.com/i18next-http-middleware/-/i18next-http-middleware-3.2.1.tgz#a0dff150de2273ec650da67336ad882eef58d179"
   integrity sha512-zBwXxDChT0YLoTXIR6jRuqnUUhXW0Iw7egoTnNXyaDRtTbfWNXwU0a53ThyuRPQ+k+tXu3ZMNKRzfLuononaRw==
 
-i18next@^22.1.1:
-  version "22.1.1"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-22.1.1.tgz#91c69421783d8c48b7299a483f8b0cdb2491eaab"
-  integrity sha512-0c7qcQ6sjdQ/qB9I6OTDSKO17YeqtEmwBKcTeML51iJSIoFM6JQePV7igOfmlj0CR+AhmhpeUp71ZMfU4t6NZg==
+i18next@^22.1.4:
+  version "22.1.4"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-22.1.4.tgz#907a4e710889ae23fb92f3510a0f7147823f92ff"
+  integrity sha512-MCDtNRyovLY22rgLoZdCzg2QIza1V1A/3Hxb99akJzTDjcqCRWEsglTpFUt0vUjOxSxz+WmxmFETLHORRS+n6Q==
   dependencies:
     "@babel/runtime" "^7.20.6"
 
