@@ -5,6 +5,7 @@ declare global {
       APP_NAME: string;
       REDIS_HOST: string;
       REDIS_PORT: string;
+      REDIS_URL?: string;
       SENTRY_DSN: string;
       DB_HOST: string;
       DB_PORT: string;
