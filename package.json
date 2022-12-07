@@ -65,6 +65,7 @@
   },
   "dependencies": {
     "@apollo/server": "^4.2.2",
+    "@aws-sdk/abort-controller": "^3.224.0",
     "@aws-sdk/client-s3": "^3.224.0",
     "@graphql-tools/load-files": "^6.6.1",
     "@graphql-tools/merge": "^8.3.12",

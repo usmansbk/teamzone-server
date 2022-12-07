@@ -250,7 +250,7 @@
     "@aws-sdk/types" "3.215.0"
     tslib "^2.3.1"
 
-"@aws-sdk/abort-controller@3.224.0":
+"@aws-sdk/abort-controller@3.224.0", "@aws-sdk/abort-controller@^3.224.0":
   version "3.224.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/abort-controller/-/abort-controller-3.224.0.tgz#4a5f53bbf4aec3acc5b94384d2130410b26e82b9"
   integrity sha512-6DxaHnSDc2V5WiwtDaRwJJb2fkmDTyGr1svIM9H671aXIwe+q17mtpm5IooKL8bW5mLJoB1pT/5ntLkfxDQgSQ==
