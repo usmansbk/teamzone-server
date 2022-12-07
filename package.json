@@ -48,7 +48,7 @@
     "transpile": "babel src --out-dir dist --extensions '.ts' --copy-files",
     "tsc": "tsc",
     "clean": "rimraf dist",
-    "start": "node dist/index",
+    "start": "yarn generate && node dist/index",
     "build": "yarn clean && yarn transpile",
     "babel-node": "babel-node --extensions '.ts'",
     "dev": "nodemon --exec yarn babel-node src",
@@ -56,8 +56,7 @@
     "docker:build": "docker build -t babakolo/teamzone . --target dev",
     "docker:test": "docker compose run --rm app yarn test",
     "generate": "prisma generate",
-    "migrate": "prisma migrate dev",
-    "postinstall": "prisma generate"
+    "migrate": "prisma migrate dev"
   },
   "lint-staged": {
     "**/*.ts": "eslint --fix",

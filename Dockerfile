@@ -12,14 +12,14 @@ CMD yarn dev
 FROM base as builder
 RUN yarn build
 
-FROM base as prod
+FROM node:14.17 as prod
 ENV NODE_ENV=production
-WORKDIR /usr/app
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/prisma ./prisma
-COPY ./locales ./locales
+WORKDIR /app
 COPY package.json yarn.lock ./
-COPY .env.vault ./
 RUN yarn
+COPY --from=builder /app/dist ./dist
+COPY ./prisma ./prisma
+COPY ./locales ./locales
+COPY .env.vault ./
 EXPOSE 4000
 CMD yarn start
