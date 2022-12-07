@@ -12,9 +12,10 @@ CMD yarn dev
 FROM base as builder
 RUN yarn build
 
-FROM node:16 as prod
+FROM node:14.17 as prod
 ENV NODE_ENV=production
 WORKDIR /app
+COPY package.json yarn.lock ./
 RUN yarn
 COPY --from=builder /app/dist ./dist
 COPY ./locales ./locales
