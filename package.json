@@ -56,7 +56,8 @@
     "docker:build": "docker build -t babakolo/teamzone . --target dev",
     "docker:test": "docker compose run --rm app yarn test",
     "generate": "prisma generate",
-    "migrate": "prisma migrate dev"
+    "migrate": "prisma migrate dev",
+    "postinstall": "prisma generate"
   },
   "lint-staged": {
     "**/*.ts": "eslint --fix",
