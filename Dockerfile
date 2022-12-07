@@ -22,4 +22,4 @@ COPY ./prisma ./prisma
 COPY ./locales ./locales
 COPY .env.vault ./
 EXPOSE 4000
-CMD npx --yes dotenv-vault@latest pull production .env --dotenvMe $DOTENV_ME;  yarn start 
+CMD yarn start
