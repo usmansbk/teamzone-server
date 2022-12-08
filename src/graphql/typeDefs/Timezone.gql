@@ -6,13 +6,17 @@ type TimezoneData {
   continentName: String!
   countryName: String!
   countryCode: CountryCode
+  countryFlag(height: PositiveInt = 20): URL!
   mainCities: [String]
   rawOffsetInMinutes: Int!
   abbreviation: String!
   rawFormat: String!
   currentTimeOffsetInMinutes: Int!
   currentTimeFormat: String!
-  flag(height: PositiveInt = 20): URL!
+
+  sunrise: DateTime
+  sunset: DateTime
+  teammates: [TeamMember]!
 }
 
 type Query {

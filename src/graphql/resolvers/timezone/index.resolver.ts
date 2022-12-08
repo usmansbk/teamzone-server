@@ -7,7 +7,7 @@ export default {
     },
   },
   TimezoneData: {
-    flag: (tz: TimeZone, { height }: { height: number }) =>
+    countryFlag: (tz: TimeZone, { height }: { height: number }) =>
       `https://flagcdn.com/h${height}/${tz.countryCode.toLocaleLowerCase()}.png`,
   },
 };
