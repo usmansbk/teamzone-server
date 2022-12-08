@@ -3,11 +3,11 @@ import { getTimeZones } from "@vvo/tzdb";
 import { AppContext } from "src/types";
 import fileUrl from "src/utils/imageFileUrl";
 
-const timeZones = getTimeZones({ includeUtc: true });
 export default {
   User: {
     fullName: (user: User) => [user.firstName, user.lastName].join(" ").trim(),
     tzData(user: User) {
+      const timeZones = getTimeZones({ includeUtc: true });
       return timeZones.find(
         (timeZone) =>
           user.timezone === timeZone.name ||

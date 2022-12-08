@@ -7,7 +7,7 @@ type User {
   fullName: String!
   picture(width: PositiveInt = 100, height: PositiveInt = 100): URL
   countryCode: CountryCode
-  timezone: TimeZone
+  timezone: String
   tzData: TimezoneData
   locale: Locale
   isMe: Boolean!
@@ -38,13 +38,13 @@ enum SocialProvider {
 input SocialLoginInput {
   code: String!
   provider: SocialProvider!
-  timezone: TimeZone
+  timezone: NonEmptyString
   locale: Locale
 }
 
 input UpdateUserProfileInput {
   firstName: NonEmptyString!
   lastName: NonEmptyString!
-  timezone: TimeZone!
+  timezone: NonEmptyString!
   locale: Locale!
 }
