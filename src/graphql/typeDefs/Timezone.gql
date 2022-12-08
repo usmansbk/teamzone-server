@@ -12,6 +12,7 @@ type TimezoneData {
   rawFormat: String!
   currentTimeOffsetInMinutes: Int!
   currentTimeFormat: String!
+  flag(height: PositiveInt = 20): URL!
 }
 
 type Query {
