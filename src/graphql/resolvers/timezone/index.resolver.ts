@@ -1,4 +1,4 @@
-import { getTimeZones, timeZonesNames } from "@vvo/tzdb";
+import { getTimeZones, timeZonesNames, TimeZone } from "@vvo/tzdb";
 
 export default {
   Query: {
@@ -21,8 +21,8 @@ export default {
       );
     },
   },
-  // Country: {
-  //   flag: (tz: TimeZone, { height }: { height: number }) =>
-  //     `https://flagcdn.com/h${height}/${tz.countryCode.toLocaleLowerCase()}.png`,
-  // },
+  TimezoneData: {
+    countryFlag: (tz: TimeZone, { height }: { height: number }) =>
+      `https://flagcdn.com/h${height}/${tz.countryCode.toLocaleLowerCase()}.png`,
+  },
 };

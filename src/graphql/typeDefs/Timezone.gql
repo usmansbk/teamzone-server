@@ -6,6 +6,7 @@ type TimezoneData {
   continentName: String!
   countryName: String!
   countryCode: CountryCode
+  countryFlag(height: PositiveInt = 20): URL
   mainCities: [String]
   rawOffsetInMinutes: Int!
   abbreviation: String!
