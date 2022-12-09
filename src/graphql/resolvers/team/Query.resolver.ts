@@ -38,5 +38,29 @@ export default {
 
       return team;
     },
+    getTeammatesByTimezone(
+      parent: unknown,
+      { id }: { id: string },
+      context: AppContext
+    ) {
+      const { prismaClient, currentUser } = context;
+
+      return prismaClient.teamMember.findMany({
+        where: {
+          team: {
+            teammates: {
+              some: {
+                member: {
+                  id: currentUser!.id,
+                },
+              },
+            },
+          },
+          member: {
+            timezone: id,
+          },
+        },
+      });
+    },
   },
 };
