@@ -1,5 +1,6 @@
 import { OAuth2Client } from "google-auth-library";
 import { INVALID_TOKEN_ERROR } from "src/constants/errors";
+import { MISSING_NAME_AND_EMAIL } from "src/constants/responseCodes";
 import { UserPayload } from "src/types";
 import AuthenticationError from "src/utils/errors/AuthenticationError";
 
@@ -21,8 +22,8 @@ export default async function verifyGoogleCode(
 
     const payload = ticket.getPayload();
 
-    if (!payload) {
-      throw new Error("No Google payload");
+    if (!(payload?.given_name && payload?.email)) {
+      throw new AuthenticationError(MISSING_NAME_AND_EMAIL);
     }
 
     return {
