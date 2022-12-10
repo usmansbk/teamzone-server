@@ -15,8 +15,18 @@ type TimezoneData {
   currentTimeFormat: String!
 }
 
+type SunData {
+  name: String!
+  sunrise: String
+  sunset: String
+  dayLength: String
+  solarNoon: String
+}
+
 type Query {
   timezones: [String!]! @auth
   getTimezonesByCountry(countryCode: CountryCode!): [TimezoneData]! @auth
   getTimezoneById(id: ID!): TimezoneData @auth
+  getCitySunriseSunset(cityName: String!, countryCode: CountryCode!): SunData
+    @auth
 }

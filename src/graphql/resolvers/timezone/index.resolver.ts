@@ -1,4 +1,5 @@
 import { getTimeZones, timeZonesNames, TimeZone } from "@vvo/tzdb";
+import { City } from "country-state-city";
 
 export default {
   Query: {
@@ -19,6 +20,17 @@ export default {
       return timezones.find(
         (timeZone) => id === timeZone.name || timeZone.group.includes(id!)
       );
+    },
+    getCitySunriseSunset(
+      _parent: unknown,
+      { cityName, countryCode }: { cityName: string; countryCode: string }
+    ) {
+      const cities = City.getCitiesOfCountry(countryCode);
+      const city = cities?.find(
+        (c) => c.name.toLocaleLowerCase() === cityName.toLocaleLowerCase()
+      );
+      console.log(city);
+      return null;
     },
   },
   TimezoneData: {
