@@ -31,15 +31,15 @@ export default async function verifyGithubCode(
     const payload = (await getUser(accessToken)) as {
       avatar_url?: string;
       email: string;
-      name: string;
+      name?: string;
     };
-    const [firstName, lastName] = payload.name.split(" ");
+    const [firstName, lastName] = payload.name?.split(" ") || [];
 
     return {
       email: payload.email,
       pictureUrl: payload.avatar_url,
-      firstName,
-      lastName,
+      firstName: firstName || "GitHub",
+      lastName: lastName || "User",
       emailVerified: true,
     };
   } catch (e) {

@@ -38,7 +38,7 @@ export default {
         throw new AuthenticationError(t(INVALID_SOCIAL_PROVIDER));
       }
 
-      let user = await prismaClient.user.findUnique({
+      let user = await prismaClient.user.findFirst({
         where: {
           email: payload.email,
         },
