@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { INVALID_TOKEN_ERROR } from "src/constants/errors";
+import { MISSING_NAME_AND_EMAIL } from "src/constants/responseCodes";
 import { UserPayload } from "src/types";
 import AuthenticationError from "src/utils/errors/AuthenticationError";
 
@@ -18,31 +18,46 @@ export default async function verifyGithubCode(
 ): Promise<UserPayload> {
   const endpoint = `https://github.com/login/oauth/access_token?client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}&code=${code}`;
 
-  try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-      },
-    });
-    const { access_token: accessToken } = (await response.json()) as {
-      access_token: string;
-    };
-    const payload = (await getUser(accessToken)) as {
-      avatar_url?: string;
-      email: string;
-      name?: string;
-    };
-    const [firstName, lastName] = payload.name?.split(" ") || [];
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+    },
+  });
+  const tokenResponse = await response.json();
 
-    return {
-      email: payload.email,
-      pictureUrl: payload.avatar_url,
-      firstName: firstName || "GitHub",
-      lastName: lastName || "User",
-      emailVerified: true,
-    };
-  } catch (e) {
-    throw new AuthenticationError(INVALID_TOKEN_ERROR, e as Error);
+  if (tokenResponse.error) {
+    throw new AuthenticationError(
+      tokenResponse.error_description || tokenResponse.error
+    );
   }
+
+  const { access_token: accessToken } = tokenResponse as {
+    access_token: string;
+  };
+
+  const payload = await getUser(accessToken);
+
+  if (payload.message) {
+    throw new AuthenticationError(payload.message);
+  }
+
+  const ticket = payload as {
+    avatar_url?: string;
+    email: string;
+    name: string;
+  };
+
+  if (!(ticket.email && ticket.name)) {
+    throw new AuthenticationError(MISSING_NAME_AND_EMAIL);
+  }
+  const [firstName, lastName] = ticket.name.split(" ");
+
+  return {
+    email: payload.email,
+    pictureUrl: payload.avatar_url,
+    firstName: firstName || "GitHub",
+    lastName: lastName || "User",
+    emailVerified: true,
+  };
 }

@@ -15,3 +15,4 @@ export const FAILED_TO_CREATE_TEAM = "FailedToCreateTeam";
 export const FAILED_TO_UPDATE_TEAM = "FailedToUpdateTeam";
 export const TEAM_NOT_FOUND = "TeamNotFound";
 export const FAILED_TO_JOIN_TEAM = "FailedToJoinTeam";
+export const MISSING_NAME_AND_EMAIL = "MissingFullnameAndEmail";
