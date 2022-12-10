@@ -38,7 +38,7 @@ type Mutation {
   updateTeam(input: UpdateTeamInput!): Team! @auth
   deleteTeam(teamId: ID!): Team! @auth
   joinTeam(inviteCode: ID!): Team! @auth
-  leaveTeam(teamId: ID!): TeamMember! @auth
+  leaveTeam(teamId: ID!): Team! @auth
   removeTeammate(memberId: ID!): TeamMember! @auth
   addTeamMemberToAdmin(memberId: ID!): TeamMember! @auth
   removeTeamMemberFromAdmin(memberId: ID!): TeamMember! @auth

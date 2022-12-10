@@ -192,9 +192,16 @@ export default {
         throw new QueryError(t(NOT_A_TEAM_MEMBER));
       }
 
-      return prismaClient.teamMember.delete({
+      return prismaClient.team.update({
         where: {
-          id: teamMember.id,
+          id: teamId,
+        },
+        data: {
+          teammates: {
+            delete: {
+              id: teamMember.id,
+            },
+          },
         },
       });
     },
