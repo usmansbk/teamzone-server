@@ -46,6 +46,18 @@ export default {
       const { prismaClient, currentUser } = context;
 
       return prismaClient.teamMember.findMany({
+        orderBy: [
+          {
+            member: {
+              firstName: "asc",
+            },
+          },
+          {
+            member: {
+              lastName: "asc",
+            },
+          },
+        ],
         distinct: ["memberId"],
         where: {
           team: {
