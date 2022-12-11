@@ -3586,10 +3586,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/ioredis-mock@^8.2.0":
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/@types/ioredis-mock/-/ioredis-mock-8.2.0.tgz#a249bf30736381b2bf9843b8f295955324516c0a"
-  integrity sha512-6t7PNRw2TY5nizHaU0uTRq9w521XsgjjapRTTbFzk7gtReWnhLWaFfrP5g7wWBlvniCxhC6H/OUCH3+eV4gMpg==
+"@types/ioredis-mock@^8.2.1":
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/@types/ioredis-mock/-/ioredis-mock-8.2.1.tgz#841af6b16fdcd2744c0b53363beeeb0b2aecb1d0"
+  integrity sha512-VZsxDuzie7RGiPn/eMQ6ODZd6Q2gb0fTkD2gyPKVkojRw4D1hPisQ87aD+cCHqGylKeU4x01VwQ4QA82Fx4fRg==
   dependencies:
     ioredis ">=5"
 
@@ -3675,10 +3675,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.9.tgz#02d013de7058cea16d36168ef2fc653464cfbad4"
   integrity sha512-CRpX21/kGdzjOpFsZSkcrXMGIBWMGNIHXXBVFSH+ggkftxg+XYP20TESbh+zFvFj3EQOl5byk0HTRn1IL6hbqg==
 
-"@types/node@^18.11.11":
-  version "18.11.11"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.11.tgz#1d455ac0211549a8409d3cdb371cd55cc971e8dc"
-  integrity sha512-KJ021B1nlQUBLopzZmPBVuGU9un7WJd/W4ya7Ih02B4Uwky5Nja0yGYav2EfYIk0RR2Q9oVhf60S2XR1BCWJ2g==
+"@types/node@^18.11.13":
+  version "18.11.13"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.13.tgz#dff34f226ec1ac0432ae3b136ec5552bd3b9c0fe"
+  integrity sha512-IASpMGVcWpUsx5xBOrxMj7Bl8lqfuTY7FKAnPmu5cHkfQVWF8GulWS1jbRqA934qZL35xh5xN/+Xe/i26Bod4w==
 
 "@types/prettier@^2.1.5":
   version "2.7.1"
@@ -5557,20 +5557,20 @@ husky@^8.0.2:
   resolved "https://registry.yarnpkg.com/husky/-/husky-8.0.2.tgz#5816a60db02650f1f22c8b69b928fd6bcd77a236"
   integrity sha512-Tkv80jtvbnkK3mYWxPZePGFpQ/tT3HNSs/sasF9P2YfkMezDl3ON37YN6jUUI4eTg5LcyVynlb6r4eyvOmspvg==
 
-i18next-fs-backend@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/i18next-fs-backend/-/i18next-fs-backend-2.0.1.tgz#5e33f28565257617682d622f6ce2c672d3f0ccc5"
-  integrity sha512-fzeiFOXqsMiFAFUnNyC4buERI11vTAuf7JIDWqaiPgBK3R+XJQMSY1LyoXaWspBEFaAkXH/0uMbOv7nttBFztg==
+i18next-fs-backend@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/i18next-fs-backend/-/i18next-fs-backend-2.1.0.tgz#a90983df2992f478e1d5f3a4c794754d19a0bcdc"
+  integrity sha512-gur0HAEkVDeUgZ9WNUcACYYl2N5FUt0C6bQCWsFPc+IYMXYWfiFQa8QQ930QAVYf71I75Ptl4XqQo5sl/u6/mA==
 
 i18next-http-middleware@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/i18next-http-middleware/-/i18next-http-middleware-3.2.1.tgz#a0dff150de2273ec650da67336ad882eef58d179"
   integrity sha512-zBwXxDChT0YLoTXIR6jRuqnUUhXW0Iw7egoTnNXyaDRtTbfWNXwU0a53ThyuRPQ+k+tXu3ZMNKRzfLuononaRw==
 
-i18next@^22.1.4:
-  version "22.1.4"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-22.1.4.tgz#907a4e710889ae23fb92f3510a0f7147823f92ff"
-  integrity sha512-MCDtNRyovLY22rgLoZdCzg2QIza1V1A/3Hxb99akJzTDjcqCRWEsglTpFUt0vUjOxSxz+WmxmFETLHORRS+n6Q==
+i18next@^22.3.0:
+  version "22.3.0"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-22.3.0.tgz#77578a4ef566e0e20e9d4f319d7fd0f4bebb26f7"
+  integrity sha512-V8ODNVavs8Sp6UvURwajQ/6CytW0GWkv384Rz16AaKNrU3L47lGz1Yv79hPNmM8IqV0eS8AOixy5Qaw1De7bcA==
   dependencies:
     "@babel/runtime" "^7.20.6"
 
