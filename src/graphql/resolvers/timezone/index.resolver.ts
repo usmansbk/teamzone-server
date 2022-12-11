@@ -1,22 +1,19 @@
-import { getTimeZones, timeZonesNames, TimeZone } from "@vvo/tzdb";
+import { getTimeZones, TimeZone } from "@vvo/tzdb";
 
+const timeZones = getTimeZones();
 export default {
   Query: {
     timezones() {
-      return timeZonesNames;
+      return timeZones.map((t) => t.name);
     },
     getTimezonesByCountry(
       _parent: unknown,
       { countryCode }: { countryCode: string }
     ) {
-      const timezones = getTimeZones({ includeUtc: true });
-
-      return timezones.filter((t) => t.countryCode === countryCode);
+      return timeZones.filter((t) => t.countryCode === countryCode);
     },
     getTimezoneById(_parent: unknown, { id }: { id: string }) {
-      const timezones = getTimeZones({ includeUtc: true });
-
-      return timezones.find(
+      return timeZones.find(
         (timeZone) => id === timeZone.name || timeZone.group.includes(id!)
       );
     },
