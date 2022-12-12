@@ -7,17 +7,26 @@ export default {
 
       const meetings = await prismaClient.meeting.findMany({
         where: {
-          teams: {
-            some: {
-              teammates: {
+          OR: [
+            {
+              owner: {
+                id: currentUser?.id,
+              },
+            },
+            {
+              teams: {
                 some: {
-                  member: {
-                    id: currentUser?.id,
+                  teammates: {
+                    some: {
+                      member: {
+                        id: currentUser?.id,
+                      },
+                    },
                   },
                 },
               },
             },
-          },
+          ],
         },
       });
 
