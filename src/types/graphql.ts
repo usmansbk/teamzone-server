@@ -30,3 +30,22 @@ export interface UpdateProfileInput {
   locale: string;
   timezone: string;
 }
+
+export interface CreateMeetingInput {
+  title: string;
+  timezone: string;
+  from: string;
+  to: string;
+  description: string;
+  teamIds: string[];
+}
+
+export interface UpdateMeetingInput {
+  id: string;
+  title: string;
+  timezone: string;
+  from: string;
+  to: string;
+  description: string;
+  teamIds: string[];
+}
