@@ -50,7 +50,6 @@ export default {
           inviteCode: code,
         },
         select: {
-          id: true,
           name: true,
           logo: true,
           createdAt: true,
