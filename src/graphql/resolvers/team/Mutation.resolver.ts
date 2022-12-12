@@ -132,11 +132,9 @@ export default {
         where: {
           inviteCode,
           teammates: {
-            some: {
+            none: {
               member: {
-                id: {
-                  not: currentUser!.id,
-                },
+                id: currentUser?.id,
               },
             },
           },
