@@ -98,5 +98,24 @@ export default {
 
       return !!teammates?.length;
     },
+    async isPinned(team: Team, args: never, context: AppContext) {
+      const { prismaClient, currentUser } = context;
+
+      const pinnedTeams = await prismaClient.team
+        .findUnique({
+          where: {
+            id: team.id,
+          },
+        })
+        .pinnedBy({
+          where: {
+            member: {
+              id: currentUser?.id,
+            },
+          },
+        });
+
+      return !!pinnedTeams?.length;
+    },
   },
 };

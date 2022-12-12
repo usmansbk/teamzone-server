@@ -16,3 +16,5 @@ export const FAILED_TO_UPDATE_TEAM = "FailedToUpdateTeam";
 export const TEAM_NOT_FOUND = "TeamNotFound";
 export const FAILED_TO_JOIN_TEAM = "FailedToJoinTeam";
 export const MISSING_NAME_AND_EMAIL = "MissingFullnameAndEmail";
+export const FAILED_TO_PIN_TEAM = "FailedToPinTeam";
+export const FAILED_TO_UNPIN_TEAM = "FailedToUnpinTeam";

@@ -3,8 +3,10 @@ import {
   FAILED_TO_DELETE_TEAM,
   FAILED_TO_JOIN_TEAM,
   FAILED_TO_MAKE_ADMIN,
+  FAILED_TO_PIN_TEAM,
   FAILED_TO_REMOVE_ADMIN,
   FAILED_TO_REMOVE_MEMBER,
+  FAILED_TO_UNPIN_TEAM,
   FAILED_TO_UPDATE_TEAM,
   INVALID_INVITE_CODE,
   NOT_A_TEAM_MEMBER,
@@ -332,6 +334,82 @@ export default {
         },
         data: {
           role: "TEAMMATE",
+        },
+      });
+    },
+    async pinTeam(
+      _parent: unknown,
+      { id }: { id: string },
+      context: AppContext
+    ) {
+      const { prismaClient, currentUser, t } = context;
+
+      const team = await prismaClient.team.findFirst({
+        where: {
+          id,
+          teammates: {
+            some: {
+              member: {
+                id: currentUser?.id,
+              },
+            },
+          },
+        },
+      });
+
+      if (!team) {
+        throw new QueryError(t(FAILED_TO_PIN_TEAM));
+      }
+
+      return prismaClient.team.update({
+        where: {
+          id: team.id,
+        },
+        data: {
+          pinnedBy: {
+            create: {
+              member: {
+                connect: {
+                  id: currentUser?.id,
+                },
+              },
+            },
+          },
+        },
+      });
+    },
+    async unpinTeam(
+      _parent: unknown,
+      { id }: { id: string },
+      context: AppContext
+    ) {
+      const { prismaClient, currentUser, t } = context;
+
+      const pinned = await prismaClient.pinnedTeam.findFirst({
+        where: {
+          member: {
+            id: currentUser?.id,
+          },
+          team: {
+            id,
+          },
+        },
+      });
+
+      if (!pinned) {
+        throw new QueryError(t(FAILED_TO_UNPIN_TEAM));
+      }
+
+      return prismaClient.team.update({
+        where: {
+          id,
+        },
+        data: {
+          pinnedBy: {
+            delete: {
+              id: pinned.id,
+            },
+          },
         },
       });
     },
