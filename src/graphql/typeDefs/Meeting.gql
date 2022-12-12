@@ -1,0 +1,45 @@
+type Meeting {
+  id: ID!
+  title: String!
+  timezone: String!
+  from: DateTime!
+  to: DateTime!
+  description: String
+  owner: User!
+  teams: [Team]!
+}
+
+input CreateMeetingInput {
+  title: NonEmptyString!
+  timezone: NonEmptyString!
+  from: DateTime!
+  to: DateTime!
+  description: NonEmptyString
+  teamIds: [ID]
+}
+
+input UpdateMeetingInput {
+  id: ID!
+  title: NonEmptyString!
+  timezone: NonEmptyString!
+  from: DateTime!
+  to: DateTime!
+  description: NonEmptyString
+  teamIds: [ID]
+}
+
+type Mutation {
+  createMeeting(input: CreateMeetingInput!): Meeting! @auth
+  updateMeeting(input: CreateMeetingInput!): Meeting! @auth
+  deleteMeeting(id: ID!): Meeting! @auth
+}
+
+type Query {
+  getMeetingById(id: ID!): Meeting! @auth
+  getMeetings: MeetingConnection! @auth
+}
+
+type MeetingConnection {
+  meetings: [Meeting]!
+  cursor: ID
+}
