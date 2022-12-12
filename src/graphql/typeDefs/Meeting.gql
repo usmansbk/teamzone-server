@@ -1,20 +1,24 @@
+scalar LocalDateTime
+
 type Meeting {
   id: ID!
   title: String!
   timezone: String!
-  from: DateTime!
-  to: DateTime!
+  from: LocalDateTime!
+  to: LocalDateTime!
   description: String
   isOwner: Boolean!
   owner: User!
   teams: [Team]!
+  createdAt: DateTime!
+  updatedAt: DateTime
 }
 
 input CreateMeetingInput {
   title: NonEmptyString!
   timezone: NonEmptyString!
-  from: DateTime!
-  to: DateTime!
+  from: LocalDateTime!
+  to: LocalDateTime!
   description: NonEmptyString
   teamIds: [ID]
 }
@@ -23,8 +27,8 @@ input UpdateMeetingInput {
   id: ID!
   title: NonEmptyString!
   timezone: NonEmptyString!
-  from: DateTime!
-  to: DateTime!
+  from: LocalDateTime!
+  to: LocalDateTime!
   description: NonEmptyString
   teamIds: [ID]
 }
