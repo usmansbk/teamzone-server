@@ -11,6 +11,7 @@ type Team {
   isPinned: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime
+  upcomingMeeting: Meeting
 }
 
 enum TeamRole {
