@@ -33,6 +33,11 @@ export default {
       const { prismaClient, currentUser } = context;
 
       return prismaClient.meeting.findFirst({
+        orderBy: [
+          {
+            from: "asc",
+          },
+        ],
         where: {
           AND: [
             {
