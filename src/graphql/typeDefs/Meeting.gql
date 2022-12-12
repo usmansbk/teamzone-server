@@ -5,6 +5,7 @@ type Meeting {
   from: DateTime!
   to: DateTime!
   description: String
+  isOwner: Boolean!
   owner: User!
   teams: [Team]!
 }
@@ -31,7 +32,7 @@ input UpdateMeetingInput {
 type Mutation {
   createMeeting(input: CreateMeetingInput!): Meeting! @auth
   updateMeeting(input: UpdateMeetingInput!): Meeting! @auth
-  deleteMeeting(id: ID!): Meeting! @auth
+  deleteMeeting(id: ID!, reason: NonEmptyString): Meeting! @auth
 }
 
 type Query {
