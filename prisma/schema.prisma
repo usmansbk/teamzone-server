@@ -12,21 +12,22 @@ datasource db {
 }
 
 model User {
-  id            String       @id @default(uuid())
-  email         String       @unique
-  emailVerified Boolean      @default(false)
-  firstName     String
-  lastName      String?
-  countryCode   String?
-  timezone      String?
-  locale        String?
-  avatar        File?
-  pictureUrl    String?
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  joinedTeams   TeamMember[]
-  createdTeams  Team[]
-  pinnedTeams   PinnedTeam[]
+  id              String       @id @default(uuid())
+  email           String       @unique
+  emailVerified   Boolean      @default(false)
+  firstName       String
+  lastName        String?
+  countryCode     String?
+  timezone        String?
+  locale          String?
+  avatar          File?
+  pictureUrl      String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  joinedTeams     TeamMember[]
+  createdTeams    Team[]
+  pinnedTeams     PinnedTeam[]
+  createdMeetings Meeting[]
 }
 
 enum TeamRole {
@@ -69,6 +70,7 @@ model Team {
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   pinnedBy   PinnedTeam[]
+  meetings   Meeting[]
 }
 
 model File {
@@ -84,4 +86,17 @@ model File {
   teamLogoId   String?  @unique
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+model Meeting {
+  id          String   @id @default(uuid())
+  title       String
+  from        DateTime
+  to          DateTime
+  description String?
+  owner       User     @relation(fields: [ownerId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  ownerId     String
+  teams       Team[]
 }
