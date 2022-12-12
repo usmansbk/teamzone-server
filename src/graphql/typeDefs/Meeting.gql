@@ -30,7 +30,7 @@ input UpdateMeetingInput {
 
 type Mutation {
   createMeeting(input: CreateMeetingInput!): Meeting! @auth
-  updateMeeting(input: CreateMeetingInput!): Meeting! @auth
+  updateMeeting(input: UpdateMeetingInput!): Meeting! @auth
   deleteMeeting(id: ID!): Meeting! @auth
 }
 
