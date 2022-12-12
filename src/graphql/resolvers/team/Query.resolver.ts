@@ -38,6 +38,37 @@ export default {
 
       return team;
     },
+    getTeamPreviewByCode(
+      parent: unknown,
+      { code }: { code: string },
+      context: AppContext
+    ) {
+      const { prismaClient } = context;
+
+      return prismaClient.team.findFirst({
+        where: {
+          inviteCode: code,
+        },
+        select: {
+          id: true,
+          name: true,
+          logo: true,
+          createdAt: true,
+          owner: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+            },
+          },
+          _count: {
+            select: {
+              teammates: true,
+            },
+          },
+        },
+      });
+    },
     getTeammatesByTimezone(
       parent: unknown,
       { id }: { id: string },
