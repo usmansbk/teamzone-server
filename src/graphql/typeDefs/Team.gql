@@ -8,6 +8,7 @@ type Team {
   isOwner: Boolean!
   isMember: Boolean!
   isAdmin: Boolean!
+  isPinned: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime
 }
@@ -43,6 +44,8 @@ type Mutation {
   removeTeammate(memberId: ID!): TeamMember! @auth
   addTeamMemberToAdmin(memberId: ID!): TeamMember! @auth
   removeTeamMemberFromAdmin(memberId: ID!): TeamMember! @auth
+  pinTeam(id: ID!): Team! @auth
+  unpinTeam(id: ID!): Team! @auth
 }
 
 input CreateTeamInput {
