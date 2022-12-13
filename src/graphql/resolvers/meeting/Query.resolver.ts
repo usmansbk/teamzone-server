@@ -6,6 +6,11 @@ export default {
       const { prismaClient, currentUser } = context;
 
       const meetings = await prismaClient.meeting.findMany({
+        orderBy: [
+          {
+            from: "asc",
+          },
+        ],
         where: {
           OR: [
             {
@@ -42,11 +47,6 @@ export default {
       const { prismaClient, currentUser } = context;
 
       return prismaClient.meeting.findFirst({
-        orderBy: [
-          {
-            from: "asc",
-          },
-        ],
         where: {
           AND: [
             {
