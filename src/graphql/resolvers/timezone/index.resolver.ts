@@ -20,6 +20,7 @@ export default {
   },
   TimezoneData: {
     countryFlag: (tz: TimeZone, { height }: { height: number }) =>
+      tz.countryCode &&
       `https://flagcdn.com/h${height}/${tz.countryCode.toLocaleLowerCase()}.png`,
   },
 };
