@@ -1,10 +1,10 @@
 import { getTimeZones, TimeZone } from "@vvo/tzdb";
 
-const timeZones = getTimeZones();
+const timeZones = getTimeZones({ includeUtc: true });
 export default {
   Query: {
     timezones() {
-      return timeZones.map((t) => t.name);
+      return timeZones;
     },
     getTimezonesByCountry(
       _parent: unknown,

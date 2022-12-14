@@ -23,7 +23,7 @@ type SunriseSunset {
 }
 
 type Query {
-  timezones: [String!]! @auth
+  timezones: [TimezoneData!]! @auth
   getTimezonesByCountry(countryCode: CountryCode!): [TimezoneData]! @auth
   getTimezoneById(id: ID!): TimezoneData @auth
 }
