@@ -99,7 +99,8 @@ export default {
             },
           ],
           from: {
-            gte: dayjs.utc().toDate(),
+            gte: dayjs().utc().toDate(),
+            lt: dayjs().utc().endOf("day").toDate(),
           },
         },
         orderBy: [
