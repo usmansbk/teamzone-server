@@ -1,4 +1,5 @@
 import { AppContext } from "src/types";
+import dayjs from "src/utils/dayjs";
 
 export default {
   Query: {
@@ -32,6 +33,9 @@ export default {
               },
             },
           ],
+          from: {
+            gte: dayjs.utc().toDate(),
+          },
         },
       });
 

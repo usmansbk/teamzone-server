@@ -1,5 +1,6 @@
 import type { Team, User } from "@prisma/client";
 import { getTimeZones } from "@vvo/tzdb";
+import dayjs from "src/utils/dayjs";
 import { AppContext } from "src/types";
 import fileUrl from "src/utils/imageFileUrl";
 
@@ -71,6 +72,42 @@ export default {
       }
 
       return user.pictureUrl;
+    },
+    async upcomingMeeting(user: User, args: never, context: AppContext) {
+      const { prismaClient } = context;
+
+      return prismaClient.meeting.findFirst({
+        where: {
+          OR: [
+            {
+              owner: {
+                id: user.id,
+              },
+            },
+            {
+              teams: {
+                some: {
+                  teammates: {
+                    some: {
+                      member: {
+                        id: user.id,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          ],
+          from: {
+            gte: dayjs.utc().toDate(),
+          },
+        },
+        orderBy: [
+          {
+            from: "asc",
+          },
+        ],
+      });
     },
   },
 };
