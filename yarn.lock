@@ -3885,10 +3885,10 @@
     "@typescript-eslint/types" "5.46.1"
     eslint-visitor-keys "^3.3.0"
 
-"@vvo/tzdb@^6.81.0":
-  version "6.81.0"
-  resolved "https://registry.yarnpkg.com/@vvo/tzdb/-/tzdb-6.81.0.tgz#4494e6adc52a16fd0ad56a954e3b24c82d122539"
-  integrity sha512-J6G/yoLb8ob9GEQdhJOJInOD1SwHfengLqfcB3qZ1csTs2N9Eaxu/OQgxVPKVUVw4+j6JrQ1+3ZiwVsDA7KfhQ==
+"@vvo/tzdb@^6.82.0":
+  version "6.82.0"
+  resolved "https://registry.yarnpkg.com/@vvo/tzdb/-/tzdb-6.82.0.tgz#05a54a9578fb09404c3db288016bcf0299dc9f79"
+  integrity sha512-xjWVW+Y6sFoERAKN7nTVaM/vk1kLFo8VX/f0LTkhViHV4mY0+EvF8z8A24JPPHViZ9+ffIVUuazCH+Vf8QgpKA==
 
 abbrev@1:
   version "1.1.1"
