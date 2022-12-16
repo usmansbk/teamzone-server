@@ -37,9 +37,14 @@ type Mutation {
   deleteMeeting(id: ID!, reason: NonEmptyString): Meeting! @auth
 }
 
+enum MeetingSort {
+  past
+  upcoming
+}
+
 type Query {
   getMeetingById(id: ID!): Meeting! @auth
-  getMeetings: MeetingConnection! @auth
+  getMeetings(sort: MeetingSort = upcoming): MeetingConnection! @auth
 }
 
 type MeetingConnection {

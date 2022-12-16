@@ -1,17 +1,48 @@
+import { Prisma } from "@prisma/client";
 import { AppContext } from "src/types";
 import dayjs from "src/utils/dayjs";
 
 export default {
   Query: {
-    async getMeetings(_parent: unknown, args: unknown, context: AppContext) {
+    async getMeetings(
+      _parent: unknown,
+      { sort }: { sort: "upcoming" | "past" },
+      context: AppContext
+    ) {
       const { prismaClient, currentUser } = context;
 
-      const meetings = await prismaClient.meeting.findMany({
-        orderBy: [
-          {
-            from: "asc",
+      let query: Prisma.MeetingFindManyArgs;
+
+      if (sort === "past") {
+        query = {
+          orderBy: [
+            {
+              from: "desc",
+            },
+          ],
+          where: {
+            to: {
+              lt: dayjs.utc().toDate(),
+            },
           },
-        ],
+        };
+      } else {
+        query = {
+          orderBy: [
+            {
+              from: "asc",
+            },
+          ],
+          where: {
+            to: {
+              gte: dayjs.utc().toDate(),
+            },
+          },
+        };
+      }
+
+      const meetings = await prismaClient.meeting.findMany({
+        orderBy: query.orderBy,
         where: {
           OR: [
             {
@@ -33,9 +64,7 @@ export default {
               },
             },
           ],
-          from: {
-            gte: dayjs.utc().toDate(),
-          },
+          ...query.where,
         },
       });
 
