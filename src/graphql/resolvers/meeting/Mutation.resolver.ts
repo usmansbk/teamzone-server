@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import {
   FAILED_TO_DELETE_MEETING,
   FAILED_TO_UPDATE_MEETING,
@@ -13,7 +14,7 @@ export default {
       context: AppContext
     ) {
       const { prismaClient, currentUser } = context;
-      const { teamIds, ...data } = input;
+      const { teamIds, repeat, ...data } = input;
 
       const authorizedTeams = await prismaClient.team.findMany({
         where: {
@@ -49,6 +50,7 @@ export default {
       return prismaClient.meeting.create({
         data: {
           ...data,
+          repeat: repeat || Prisma.JsonNull,
           owner: {
             connect: {
               id: currentUser?.id,
@@ -64,7 +66,7 @@ export default {
       context: AppContext
     ) {
       const { prismaClient, currentUser, t } = context;
-      const { id, teamIds, ...data } = input;
+      const { id, teamIds, repeat, ...data } = input;
 
       const meeting = await prismaClient.meeting.findFirst({
         where: {
@@ -129,6 +131,7 @@ export default {
         },
         data: {
           ...data,
+          repeat: repeat || Prisma.JsonNull,
           teams: {
             connect: authorizedTeamIds.map((teamId) => ({ id: teamId })),
             disconnect: removedTeamIds.map((teamId) => ({ id: teamId })),

@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client";
+
 export type AuthStrategy = "owner";
 
 export interface AuthRule {
@@ -14,6 +16,11 @@ export interface UpdateTeamInput extends CreateTeamInput {
 }
 
 export type SocialProvider = "GOOGLE" | "GITHUB";
+
+export interface Recurrence {
+  interval: number;
+  freq: "DAILY" | "WEEKLY" | "MONTHLY" | "YEARLY";
+}
 
 export interface UserPayload {
   firstName: string;
@@ -38,6 +45,7 @@ export interface CreateMeetingInput {
   to: string;
   description: string;
   teamIds: string[];
+  repeat?: Prisma.JsonObject;
 }
 
 export interface UpdateMeetingInput {
@@ -48,4 +56,5 @@ export interface UpdateMeetingInput {
   to: string;
   description: string;
   teamIds: string[];
+  repeat?: Prisma.JsonObject;
 }
