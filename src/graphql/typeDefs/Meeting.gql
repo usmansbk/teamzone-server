@@ -10,6 +10,17 @@ type Meeting {
   teams: [Team]!
   createdAt: DateTime!
   updatedAt: DateTime
+  repeat: Recurrence
+}
+
+type Recurrence {
+  freq: Frequency!
+  interval: Int!
+}
+
+input RecurrenceInput {
+  freq: Frequency!
+  interval: PositiveInt!
 }
 
 input CreateMeetingInput {
@@ -19,6 +30,7 @@ input CreateMeetingInput {
   to: DateTime!
   description: NonEmptyString
   teamIds: [ID]
+  repeat: RecurrenceInput
 }
 
 input UpdateMeetingInput {
@@ -29,6 +41,7 @@ input UpdateMeetingInput {
   to: DateTime!
   description: NonEmptyString
   teamIds: [ID]
+  repeat: RecurrenceInput
 }
 
 type Mutation {
@@ -40,6 +53,13 @@ type Mutation {
 enum MeetingSort {
   past
   upcoming
+}
+
+enum Frequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
 }
 
 type Query {

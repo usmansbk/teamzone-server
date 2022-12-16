@@ -100,4 +100,5 @@ model Meeting {
   updatedAt   DateTime @updatedAt
   ownerId     String
   teams       Team[]
+  repeat      Json?
 }
