@@ -21,9 +21,18 @@ export default {
             },
           ],
           where: {
-            to: {
-              lt: dayjs.utc().toDate(),
-            },
+            OR: [
+              {
+                to: {
+                  lt: dayjs.utc().toDate(),
+                },
+              },
+              {
+                repeat: {
+                  not: Prisma.JsonNull,
+                },
+              },
+            ],
           },
         };
       } else {
@@ -34,9 +43,18 @@ export default {
             },
           ],
           where: {
-            to: {
-              gte: dayjs.utc().toDate(),
-            },
+            OR: [
+              {
+                to: {
+                  gte: dayjs.utc().toDate(),
+                },
+              },
+              {
+                repeat: {
+                  not: Prisma.JsonNull,
+                },
+              },
+            ],
           },
         };
       }
