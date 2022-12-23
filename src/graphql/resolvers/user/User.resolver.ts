@@ -47,7 +47,11 @@ export default {
             id: user.id,
           },
         })
-        .createdTeams();
+        .createdTeams({
+          orderBy: {
+            name: "asc",
+          },
+        });
     },
     isMe(user: User, args: never, context: AppContext): boolean {
       return user.id === context.currentUser!.id;
