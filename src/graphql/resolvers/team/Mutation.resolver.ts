@@ -155,6 +155,7 @@ export default {
           data: {
             teammates: {
               create: {
+                role: currentUser?.id === team.ownerId ? "ADMIN" : "TEAMMATE",
                 member: {
                   connect: {
                     id: currentUser!.id,

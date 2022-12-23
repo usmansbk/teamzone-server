@@ -81,22 +81,25 @@ export default {
     async isAdmin(team: Team, args: never, context: AppContext) {
       const { prismaClient, currentUser } = context;
 
-      const teammates = await prismaClient.team
-        .findUnique({
-          where: {
-            id: team.id,
-          },
-        })
-        .teammates({
-          where: {
-            role: "ADMIN",
-            member: {
-              id: currentUser?.id,
+      if (team.ownerId !== currentUser?.id) {
+        const teammates = await prismaClient.team
+          .findUnique({
+            where: {
+              id: team.id,
             },
-          },
-        });
+          })
+          .teammates({
+            where: {
+              role: "ADMIN",
+              member: {
+                id: currentUser?.id,
+              },
+            },
+          });
 
-      return !!teammates?.length;
+        return !!teammates?.length;
+      }
+      return true;
     },
     async isPinned(team: Team, args: never, context: AppContext) {
       const { prismaClient, currentUser } = context;
