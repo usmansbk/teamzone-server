@@ -1,0 +1,75 @@
+type Timer {
+  id: ID!
+  title: String!
+  timezone: String!
+  direction: TimerDirection!
+  type: TimerType!
+  startAt: DateTime
+  dateTime: DateTime
+  durationInMinutes: Int
+  description: String
+  isOwner: Boolean!
+  owner: User!
+  teams: [Team]!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  repeat: Recurrence
+}
+
+enum TimerType {
+  DATE
+  DURATION
+}
+
+enum TimerDirection {
+  COUNTUP
+  COUNTDOWN
+}
+
+enum TimerState {
+  ACTIVE
+  INACTIVE
+}
+
+input CreateTimerInput {
+  title: NonEmptyString!
+  timezone: NonEmptyString!
+  direction: TimerDirection!
+  type: TimerType!
+  startAt: DateTime
+  dateTime: DateTime
+  durationInMinutes: PositiveInt
+  description: NonEmptyString
+  teamIds: [ID]
+  repeat: RecurrenceInput
+}
+
+input UpdateTimerInput {
+  id: ID!
+  title: NonEmptyString!
+  timezone: NonEmptyString!
+  direction: TimerDirection!
+  type: TimerType!
+  startAt: DateTime
+  dateTime: DateTime
+  durationInMinutes: PositiveInt
+  description: NonEmptyString
+  teamIds: [ID]
+  repeat: RecurrenceInput
+}
+
+type TimerConnection {
+  timers: [Timer]!
+  cursor: ID
+}
+
+type Mutation {
+  createTimer(input: CreateTimerInput!): Timer! @auth
+  updateTimer(input: UpdateTimerInput!): Timer! @auth
+  deleteTimer(id: ID!, reason: NonEmptyString): Timer! @auth
+}
+
+type Query {
+  getTimerById(id: ID!): Timer! @auth
+  getTimers(state: TimerState): TimerConnection! @auth
+}

@@ -13,16 +13,6 @@ type Meeting {
   repeat: Recurrence
 }
 
-type Recurrence {
-  freq: Frequency!
-  interval: Int!
-}
-
-input RecurrenceInput {
-  freq: Frequency!
-  interval: PositiveInt!
-}
-
 input CreateMeetingInput {
   title: NonEmptyString!
   timezone: NonEmptyString!
@@ -53,13 +43,6 @@ type Mutation {
 enum MeetingSort {
   past
   upcoming
-}
-
-enum Frequency {
-  DAILY
-  WEEKLY
-  MONTHLY
-  YEARLY
 }
 
 type Query {

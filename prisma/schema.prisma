@@ -28,6 +28,7 @@ model User {
   createdTeams    Team[]
   pinnedTeams     PinnedTeam[]
   createdMeetings Meeting[]
+  timers          Timer[]
 }
 
 enum TeamRole {
@@ -71,6 +72,7 @@ model Team {
   updatedAt  DateTime     @updatedAt
   pinnedBy   PinnedTeam[]
   meetings   Meeting[]
+  timers     Timer[]
 }
 
 model File {
@@ -101,4 +103,38 @@ model Meeting {
   ownerId     String
   teams       Team[]
   repeat      Json?
+}
+
+enum TimerDirection {
+  COUNTUP
+  COUNTDOWN
+}
+
+enum TimerType {
+  DATE
+  DURATION
+}
+
+enum TimerState {
+  ACTIVE
+  INACTIVE
+}
+
+model Timer {
+  id                String         @id @default(uuid())
+  title             String
+  timezone          String?
+  description       String?
+  direction         TimerDirection
+  type              TimerType
+  startAt           DateTime?
+  dateTime          DateTime?
+  durationInMinutes Int?
+  state             TimerState?    @default(ACTIVE)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  owner             User           @relation(fields: [ownerId], references: [id])
+  ownerId           String
+  teams             Team[]
+  repeat            Json?
 }

@@ -1,0 +1,16 @@
+type Recurrence {
+  freq: Frequency!
+  interval: Int!
+}
+
+input RecurrenceInput {
+  freq: Frequency!
+  interval: PositiveInt!
+}
+
+enum Frequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
