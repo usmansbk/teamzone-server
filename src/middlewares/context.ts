@@ -1,7 +1,10 @@
 import type { Request, Response, NextFunction } from "express";
+import { JsonWebTokenError } from "jsonwebtoken";
 import prismaClient from "src/config/database";
 import Sentry from "src/config/sentry";
+import { INVALID_TOKEN } from "src/constants/responseCodes";
 import redisClient from "src/services/redis";
+import AuthenticationError from "src/utils/errors/AuthenticationError";
 import jwt from "src/utils/jwt";
 
 const contextMiddleware = async (
@@ -37,6 +40,9 @@ const contextMiddleware = async (
         }
       }
     } catch (e) {
+      if (e instanceof JsonWebTokenError) {
+        return next(new AuthenticationError(t(INVALID_TOKEN)));
+      }
       return next(e);
     }
   }
