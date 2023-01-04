@@ -7,9 +7,6 @@ CREATE TYPE "TimerDirection" AS ENUM ('COUNTUP', 'COUNTDOWN');
 -- CreateEnum
 CREATE TYPE "TimerType" AS ENUM ('DATE', 'DURATION');
 
--- CreateEnum
-CREATE TYPE "TimerState" AS ENUM ('ACTIVE', 'INACTIVE');
-
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
@@ -101,14 +98,13 @@ CREATE TABLE "Timer" (
     "description" TEXT,
     "direction" "TimerDirection" NOT NULL,
     "type" "TimerType" NOT NULL,
-    "startAt" TIMESTAMP(3),
     "dateTime" TIMESTAMP(3),
-    "durationInMinutes" INTEGER,
-    "state" "TimerState" DEFAULT 'ACTIVE',
+    "duration" TEXT,
+    "ownerId" TEXT NOT NULL,
+    "startAt" TIMESTAMP(3),
+    "repeat" JSONB,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "ownerId" TEXT NOT NULL,
-    "repeat" JSONB,
 
     CONSTRAINT "Timer_pkey" PRIMARY KEY ("id")
 );

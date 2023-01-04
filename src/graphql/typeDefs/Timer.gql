@@ -6,7 +6,7 @@ type Timer {
   type: TimerType!
   startAt: DateTime
   dateTime: DateTime
-  durationInMinutes: Int
+  duration: Duration
   description: String
   isOwner: Boolean!
   owner: User!
@@ -38,7 +38,7 @@ input CreateTimerInput {
   type: TimerType!
   startAt: DateTime
   dateTime: DateTime
-  durationInMinutes: PositiveInt
+  duration: Duration
   description: NonEmptyString
   teamIds: [ID]
   repeat: RecurrenceInput
@@ -52,7 +52,7 @@ input UpdateTimerInput {
   type: TimerType!
   startAt: DateTime
   dateTime: DateTime
-  durationInMinutes: PositiveInt
+  duration: Duration
   description: NonEmptyString
   teamIds: [ID]
   repeat: RecurrenceInput

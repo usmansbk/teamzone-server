@@ -115,26 +115,20 @@ enum TimerType {
   DURATION
 }
 
-enum TimerState {
-  ACTIVE
-  INACTIVE
-}
-
 model Timer {
-  id                String         @id @default(uuid())
-  title             String
-  timezone          String?
-  description       String?
-  direction         TimerDirection
-  type              TimerType
-  startAt           DateTime?
-  dateTime          DateTime?
-  durationInMinutes Int?
-  state             TimerState?    @default(ACTIVE)
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
-  owner             User           @relation(fields: [ownerId], references: [id])
-  ownerId           String
-  teams             Team[]
-  repeat            Json?
+  id          String         @id @default(uuid())
+  title       String
+  timezone    String?
+  description String?
+  direction   TimerDirection
+  type        TimerType
+  dateTime    DateTime?
+  duration    String?
+  owner       User           @relation(fields: [ownerId], references: [id])
+  ownerId     String
+  teams       Team[]
+  startAt     DateTime?
+  repeat      Json?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
 }
