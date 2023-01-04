@@ -116,19 +116,19 @@ enum TimerType {
 }
 
 model Timer {
-  id          String         @id @default(uuid())
+  id          String          @id @default(uuid())
   title       String
   timezone    String?
   description String?
-  direction   TimerDirection
+  direction   TimerDirection? @default(COUNTDOWN)
   type        TimerType
   dateTime    DateTime?
   duration    String?
-  owner       User           @relation(fields: [ownerId], references: [id])
+  owner       User            @relation(fields: [ownerId], references: [id])
   ownerId     String
   teams       Team[]
   startAt     DateTime?
   repeat      Json?
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
 }

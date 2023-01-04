@@ -34,7 +34,6 @@ enum TimerState {
 input CreateTimerInput {
   title: NonEmptyString!
   timezone: NonEmptyString!
-  direction: TimerDirection!
   type: TimerType!
   startAt: DateTime
   dateTime: DateTime
@@ -48,7 +47,6 @@ input UpdateTimerInput {
   id: ID!
   title: NonEmptyString!
   timezone: NonEmptyString!
-  direction: TimerDirection!
   type: TimerType!
   startAt: DateTime
   dateTime: DateTime

@@ -96,7 +96,7 @@ CREATE TABLE "Timer" (
     "title" TEXT NOT NULL,
     "timezone" TEXT,
     "description" TEXT,
-    "direction" "TimerDirection" NOT NULL,
+    "direction" "TimerDirection" DEFAULT 'COUNTDOWN',
     "type" "TimerType" NOT NULL,
     "dateTime" TIMESTAMP(3),
     "duration" TEXT,
