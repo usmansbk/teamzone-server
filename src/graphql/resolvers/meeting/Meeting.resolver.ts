@@ -24,7 +24,9 @@ export default {
             id: meeting.id,
           },
         })
-        .teams();
+        .teams({
+          orderBy: [{ name: "asc" }],
+        });
     },
   },
 };
