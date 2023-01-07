@@ -14,7 +14,8 @@ export default {
       context: AppContext
     ) {
       const { prismaClient, currentUser } = context;
-      const { teamIds, repeat, ...data } = input;
+      const { teamIds, repeat, type, duration, dateTime, startAt, ...data } =
+        input;
 
       const authorizedTeams = await prismaClient.team.findMany({
         where: {
@@ -50,6 +51,10 @@ export default {
       return prismaClient.timer.create({
         data: {
           ...data,
+          type,
+          duration,
+          dateTime,
+          startAt,
           repeat: repeat || Prisma.JsonNull,
           owner: {
             connect: {
@@ -66,7 +71,16 @@ export default {
       context: AppContext
     ) {
       const { prismaClient, currentUser, t } = context;
-      const { id, teamIds, repeat, ...data } = input;
+      const {
+        id,
+        teamIds,
+        repeat,
+        type,
+        duration,
+        startAt,
+        dateTime,
+        ...data
+      } = input;
 
       const timer = await prismaClient.meeting.findFirst({
         where: {
@@ -131,6 +145,10 @@ export default {
         },
         data: {
           ...data,
+          type,
+          duration,
+          dateTime,
+          startAt,
           repeat: repeat || Prisma.JsonNull,
           teams: {
             connect: authorizedTeamIds.map((teamId) => ({ id: teamId })),
