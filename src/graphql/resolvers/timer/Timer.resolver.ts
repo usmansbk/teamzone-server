@@ -13,7 +13,7 @@ export default {
     },
     teams(timer: Timer, _args: never, context: AppContext) {
       const { prismaClient } = context;
-      return prismaClient.meeting
+      return prismaClient.timer
         .findUnique({
           where: {
             id: timer.id,
