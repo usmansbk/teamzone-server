@@ -101,7 +101,7 @@ CREATE TABLE "Timer" (
     "dateTime" TIMESTAMP(3),
     "duration" TEXT,
     "ownerId" TEXT NOT NULL,
-    "startAt" TIMESTAMP(3),
+    "startAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "repeat" JSONB,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
