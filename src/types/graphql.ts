@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, TimerType } from "@prisma/client";
 
 export type AuthStrategy = "owner";
 
@@ -41,20 +41,29 @@ export interface UpdateProfileInput {
 export interface CreateMeetingInput {
   title: string;
   timezone: string;
-  from: string;
-  to: string;
+  from: Date;
+  to: Date;
   description: string;
   teamIds: string[];
   repeat?: Prisma.JsonObject;
 }
 
-export interface UpdateMeetingInput {
+export interface UpdateMeetingInput extends CreateMeetingInput {
   id: string;
+}
+
+export interface CreateTimerInput {
   title: string;
   timezone: string;
-  from: string;
-  to: string;
+  duration: string;
+  type: TimerType;
+  startAt: Date;
+  dateTime: Date;
   description: string;
   teamIds: string[];
   repeat?: Prisma.JsonObject;
+}
+
+export interface UpdateTimerInput extends CreateTimerInput {
+  id: string;
 }

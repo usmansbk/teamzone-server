@@ -20,3 +20,5 @@ export const FAILED_TO_PIN_TEAM = "FailedToPinTeam";
 export const FAILED_TO_UNPIN_TEAM = "FailedToUnpinTeam";
 export const FAILED_TO_UPDATE_MEETING = "FailedToUpdateMeeting";
 export const FAILED_TO_DELETE_MEETING = "FailedToDeleteMeeting";
+export const FAILED_TO_UPDATE_TIMER = "FailedToUpdateTimer";
+export const FAILED_TO_DELETE_TIMER = "FailedToDeleteTimer";
