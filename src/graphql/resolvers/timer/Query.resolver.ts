@@ -4,7 +4,7 @@ import dayjs from "src/utils/dayjs";
 
 export default {
   Query: {
-    getMeetings(
+    getTimers(
       _parent: unknown,
       { state }: { state: "ACTIVE" | "INACTIVE" },
       context: AppContext
