@@ -87,7 +87,7 @@ export default {
         ...data
       } = input;
 
-      const timer = await prismaClient.meeting.findFirst({
+      const timer = await prismaClient.timer.findFirst({
         where: {
           id,
           owner: {
