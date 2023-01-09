@@ -1,4 +1,5 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, TimerType } from "@prisma/client";
+import dayjs from "src/utils/dayjs";
 import {
   FAILED_TO_DELETE_TIMER,
   FAILED_TO_UPDATE_TIMER,
@@ -48,13 +49,17 @@ export default {
         },
       });
 
+      const start = startAt ? dayjs.utc(startAt) : dayjs.utc();
       return prismaClient.timer.create({
         data: {
           ...data,
           type,
           duration,
-          dateTime,
-          startAt,
+          dateTime:
+            type === TimerType.DURATION
+              ? start.add(dayjs.duration(duration)).toDate()
+              : dateTime,
+          startAt: start.toDate(),
           repeat: repeat || Prisma.JsonNull,
           owner: {
             connect: {
@@ -139,6 +144,7 @@ export default {
         (teamId) => !authorizedTeamIds.includes(teamId)
       );
 
+      const start = startAt ? dayjs.utc(startAt) : dayjs.utc();
       return prismaClient.timer.update({
         where: {
           id: timer.id,
@@ -147,8 +153,11 @@ export default {
           ...data,
           type,
           duration,
-          dateTime,
-          startAt,
+          dateTime:
+            type === TimerType.DURATION
+              ? start.add(dayjs.duration(duration)).toDate()
+              : dateTime,
+          startAt: start.toDate(),
           repeat: repeat || Prisma.JsonNull,
           teams: {
             connect: authorizedTeamIds.map((teamId) => ({ id: teamId })),
