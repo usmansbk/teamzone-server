@@ -51,6 +51,7 @@ input UpdateTimerInput {
   startAt: DateTime
   dateTime: DateTime
   duration: Duration
+  direction: TimerDirection
   description: NonEmptyString
   teamIds: [ID]
   repeat: RecurrenceInput
